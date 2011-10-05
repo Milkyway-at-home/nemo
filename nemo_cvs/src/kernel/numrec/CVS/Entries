@@ -1,0 +1,24 @@
+/Makefile/1.6/Fri Sep 30 20:29:28 2011//
+/README/1.2/Fri Sep 30 20:29:28 2011//
+/beta.c/1.1.1.1/Fri Sep 30 20:29:28 2011//
+/covsrt.c/1.1/Fri Sep 30 20:29:28 2011//
+/eigsrt.c/1.1.1.1/Fri Sep 30 20:29:28 2011//
+/eigsrt_d.c/1.1.1.1/Fri Sep 30 20:29:28 2011//
+/gamma.c/1.3/Mon Oct  3 11:51:57 2011//
+/gaussj.c/1.1/Fri Sep 30 20:29:28 2011//
+/jacobi.c/1.1.1.1/Fri Sep 30 20:29:28 2011//
+/jacobi_d.c/1.2/Fri Sep 30 20:29:28 2011//
+/kstwo.c/1.3/Fri Sep 30 20:29:28 2011//
+/lfit.c/1.3/Fri Sep 30 20:29:28 2011//
+/mrqcof.c/1.4/Fri Sep 30 20:29:28 2011//
+/mrqmin.c/1.4/Fri Sep 30 20:29:28 2011//
+/nr_nllsqfit.c/1.7/Fri Sep 30 20:29:28 2011//
+/nrutil.c/1.5/Fri Sep 30 20:29:28 2011//
+/pearsn.c/1.1.1.1/Fri Sep 30 20:29:28 2011//
+/polint.c/1.1/Fri Sep 30 20:29:28 2011//
+/probks.c/1.1.1.1/Fri Sep 30 20:29:28 2011//
+/qromb.c/1.1/Fri Sep 30 20:29:28 2011//
+/ran3.c/1.4/Fri Sep 30 20:29:28 2011//
+/sort.c/1.1.1.1/Fri Sep 30 20:29:28 2011//
+/trapzd.c/1.1/Fri Sep 30 20:29:28 2011//
+D

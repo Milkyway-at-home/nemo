@@ -1,0 +1,24 @@
+rotcurshape: VERSION 1.4 [NEMO]
+
+ file                : map1.vel
+ velocity field file : map1.vel (image)
+ free angle          :  0.0 (degrees)
+ velocity field      : both halves
+ used weighting      : uniform
+ parameters to fit   : vsys xpos ypos pa inc P1 P2
+ tol, lab, itmax     : 0.001 0.001 50
+
+
+
+
+
+VSYS: -5.66437e-16 0.00962557
+XPOS: 63.5 0.00653768
+YPOS: 63.5 0.00864389
+PA:   30.0013 0.00902789
+INC:  59.9993 0.0198592
+P1:  100.174 0.0640064
+P2:  19.41 0.0375674
+NPT:  5658
+
+ Error correction factor: : 1

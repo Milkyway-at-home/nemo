@@ -1,0 +1,1901 @@
+TESTSUITE started Mon Oct  3 07:57:18 EDT 2011
+NEMO version 3.3.1 fornax.phys.rpi.edu (x86_64-unknown-linux-gnu)
+==========================================================
+Cleaning src/image/fits
+Creating ccd.in
+ccdmath out=ccd.in "fie=10*%x+sqrt(%y)"  size=10,10,1	
+### nemo Debug Info: Generating a map from scratch
+Running ccdfits
+ccdfits ccd.in fits.in; nemo.coverage ccdfits.c
+Running fitsccd
+fitsccd fits.in ccd.out; nemo.coverage fitsccd.c
+### nemo Debug Info: FITS file: Image size 10 10
+### nemo Debug Info: There were no blank values set in the image
+Testing ccd-fits-ccd with FIE=10*%x+sqrt(%y)
+ccdmath ccd.in,ccd.out - %1-%2 | ccdstat -
+Min=-0.000004  Max=0.000003
+Number of points      : 100
+Mean and dispersion   : -0.000000 0.000001
+Skewness and kurtosis : -0.820134 3.622802
+Sum and Sum*Dx*Dy*Dz  : -0.000027 -0.000027
+0/100 out-of-range points discarded
+Running scanfits
+scanfits fits.in	; nemo.coverage scanfits.c
+__________________________________________________________
+______________________ FITS HEADER _______________________
+Primary header: standard SIMPLE
+BITPIX = -32
+NAXIS  = 3
+###	NAXIS#	CTYPE#  	CDELT#	CRVAL#	CRPIX#
+ 1:	10	X       	1	0	1
+ 2:	10	Y       	1	0	1
+ 3:	1	Z       	1	0	1
+headersize = 2640 bytes = 1 2880-records
+datasize = 400 bytes = 1 2880-records
+__________________________________________________________
+ccdmath "" - "rang(0,1)" size=10,10,1 seed=1 |  ccdfits - map001.fits ; nemo.coverage ccdfits.c
+### nemo Debug Info: Generating a map from scratch
+ccdmath "" - "rang(0,1)" size=10,10,1 seed=2 |  ccdfits - map002.fits; nemo.coverage ccdfits.c
+### nemo Debug Info: Generating a map from scratch
+ccdmath "" - "rang(0,1)" size=10,10,1 seed=3 |  ccdfits - map003.fits; nemo.coverage ccdfits.c
+### nemo Debug Info: Generating a map from scratch
+Running fitsglue
+fitsglue map%03d.fits cube.fits inlist=1:3 ; nemo.coverage fitsglue.c
+### nemo Debug Info: Blanked out a total of 2 cards
+Output NAXIS3 = 3
+fitshead map001.fits | grep DATA; nemo.coverage fitshead.c
+DATASUM = '0000000000000000'
+DATAMIN =     -2.586638927E+00 /
+DATAMAX =      2.619837284E+00 /
+fitshead map002.fits | grep DATA
+DATASUM = '0000000000000000'
+DATAMIN =     -2.655572653E+00 /
+DATAMAX =      2.179121494E+00 /
+fitshead map003.fits | grep DATA
+DATASUM = '0000000000000000'
+DATAMIN =     -2.652021646E+00 /
+DATAMAX =      2.824515581E+00 /
+fitshead cube.fits | grep DATA ; nemo.coverage fitshead.c
+DATAMIN =         -2.655572653
+DATAMAX =          2.824515581
+Running fitshead
+fitshead map003.fits; nemo.coverage fitshead.c
+SIMPLE  =                    T /
+BITPIX  =                  -32 /
+NAXIS   =                    3 /
+NAXIS1  =                   10 /
+NAXIS2  =                   10 /
+NAXIS3  =                    1 /
+COMMENT  FITS (Flexible Image Transport System) format is defined in 'Astronomy
+COMMENT  and Astrophysics', volume 376, page 359; bibcode: 2001A&A...376..359H
+COMMENT  nemo::fitsio.c $Id: fitsio.c,v 1.14 2006/12/11 21:17:34 pteuben Exp $
+DATASUM = '0000000000000000'
+CHECKSUM= '0000000000000000'
+CRPIX1  =      1.000000000E+00 /
+CRPIX2  =      1.000000000E+00 /
+CRPIX3  =      1.000000000E+00 /
+CRVAL1  =      0.000000000E+00 /
+CRVAL2  =      0.000000000E+00 /
+CRVAL3  =      0.000000000E+00 /
+CDELT1  =      1.000000000E+00 /
+CDELT2  =      1.000000000E+00 /
+CDELT3  =      1.000000000E+00 /
+CTYPE1  = 'X       '           /
+CTYPE2  = 'Y       '           /
+CTYPE3  = 'Z       '           /
+DATAMIN =     -2.652021646E+00 /
+DATAMAX =      2.824515581E+00 /
+ORIGIN  = 'NEMO ccdfits 5.4'
+AUTHOR  = 'ricec2  '           /
+OBJECT  = '        '           /
+COMMENT
+HISTORY  NEMO: History in reversed order
+HISTORY  ccdfits - map003.fits VERSION=5.4
+HISTORY  ccdmath  - rang(0,1) size=10,10,1 seed=3 VERSION=3.2a
+END
+tabfits tab.in tab.fits nx=10 ny=10 nz=1; nemo.coverage tabfits.c
+### nemo Debug Info: Creating initial fits primary HDU 10*10*1
+### nemo Debug Info: Read 0 header lines
+### nemo Debug Info: MinMax in map: 1 - 100
+fitshead tab.fits | grep DATA
+DATASUM = '0000000000000000'
+==========================================================
+Cleaning src/image/io
+Creating ccd.in
+ccdmath out=ccd.in "fie=10*%x+sqrt(%y)"  size=10,10,1
+### nemo Debug Info: Generating a map from scratch
+Running ccddump
+ccddump ccd.in . ; nemo.coverage ccddump.c
+Running ccdprint
+ccdprint ccd.in x= y= format=%7.3f; nemo.coverage ccdprint.c
+  3.000  13.000  23.000  33.000  43.000  53.000  63.000  73.000  83.000  93.000 
+  2.828  12.828  22.828  32.828  42.828  52.828  62.828  72.828  82.828  92.828 
+  2.646  12.646  22.646  32.646  42.646  52.646  62.646  72.646  82.646  92.646 
+  2.449  12.449  22.449  32.449  42.449  52.449  62.449  72.449  82.449  92.449 
+  2.236  12.236  22.236  32.236  42.236  52.236  62.236  72.236  82.236  92.236 
+  2.000  12.000  22.000  32.000  42.000  52.000  62.000  72.000  82.000  92.000 
+  1.732  11.732  21.732  31.732  41.732  51.732  61.732  71.732  81.732  91.732 
+  1.414  11.414  21.414  31.414  41.414  51.414  61.414  71.414  81.414  91.414 
+  1.000  11.000  21.000  31.000  41.000  51.000  61.000  71.000  81.000  91.000 
+  0.000  10.000  20.000  30.000  40.000  50.000  60.000  70.000  80.000  90.000 
+==========================================================
+Cleaning src/image/misc
+Creating ccd.in
+ccdmath out=ccd.in "fie=10/sqrt((abs(%x-31.5))**1.1+(abs(%y-31.5))**1.1)" size=64,64,1
+### nemo Debug Info: Generating a map from scratch
+Running ccdplot
+ccdplot ccd.in 0.01,0.1,1:9,9.9,9.99  yapp=/xs ; nemo.coverage ccdplot.c
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+Running ccdstat
+ccdstat ccd.in ; nemo.coverage ccdstat.c
+Min=1.060264  Max=10.352649
+Number of points      : 4096
+Mean and dispersion   : 1.711598 0.690818
+Skewness and kurtosis : 4.406508 34.555856
+Sum and Sum*Dx*Dy*Dz  : 7010.703997 7010.703997
+0/4096 out-of-range points discarded
+Creating ccdmom.in
+ccdmath out=ccdmom.in "fie=%x+2*%y+4*%z" size=2,2,2
+### nemo Debug Info: Generating a map from scratch
+Running ccdmom
+ccdmom ccdmom.in - 1 |  ccdstat - ; nemo.coverage ccdmom.c ccdstat.c
+### nemo Debug Info: Reducing 2*2*2 to a 1*2*2 cube
+Min=1.000000  Max=13.000000
+Number of points      : 4
+Mean and dispersion   : 7.000000 4.472136
+Skewness and kurtosis : 0.000000 -1.360000
+Sum and Sum*Dx*Dy*Dz  : 28.000000 56.000000
+0/4 out-of-range points discarded
+ccdmom ccdmom.in - 2 |  ccdstat - ; nemo.coverage ccdmom.c ccdstat.c
+### nemo Debug Info: Reducing 2*2*2 to a 2*1*2 cube
+Min=2.000000  Max=12.000000
+Number of points      : 4
+Mean and dispersion   : 7.000000 4.123106
+Skewness and kurtosis : 0.000000 -1.778547
+Sum and Sum*Dx*Dy*Dz  : 28.000000 56.000000
+0/4 out-of-range points discarded
+ccdmom ccdmom.in - 3 |  ccdstat - ; nemo.coverage ccdmom.c ccdstat.c
+### nemo Debug Info: Reducing 2*2*2 to a 2*2*1 cube
+Min=4.000000  Max=10.000000
+Number of points      : 4
+Mean and dispersion   : 7.000000 2.236068
+Skewness and kurtosis : 0.000000 -1.360000
+Sum and Sum*Dx*Dy*Dz  : 28.000000 56.000000
+0/4 out-of-range points discarded
+==========================================================
+Cleaning src/image/rotcur
+Creating map1.den
+ccdvel map1.den radii=@map1.r vrot=@map1.d pa=30 inc=60 amp=t; nemo.coverage ccdvel.c
+### nemo Debug Info: Found 21 radii
+### nemo Debug Info: Found 21 rot velocities
+### nemo Debug Info: Found 1 inclinations
+### nemo Debug Info: Found 1 position angles
+### nemo Debug Info: Found 1 phase angles for rotation
+### nemo Debug Info: Found 1 phase angles for expansion
+### nemo Debug Info: gridding mode: sky->gal plane
+### Warning [ccdvel]: 3600/16384 cells with no signal
+Mapsize: 128 * 128 * 1
+Cell size: 1 * 1 * 1
+Center: 63.5 * 63.5 pixels
+BLC: 0 0
+Systemic velocity: 0
+Min and max in map: 0.00675153 0.965718
+Running ccdvel
+Creating map1.vel
+ccdvel map1.vel radii=@map1.r vrot=@map1.v pa=30 inc=60
+### nemo Debug Info: Found 21 radii
+### nemo Debug Info: Found 21 rot velocities
+### nemo Debug Info: Found 1 inclinations
+### nemo Debug Info: Found 1 position angles
+### nemo Debug Info: Found 1 phase angles for rotation
+### nemo Debug Info: Found 1 phase angles for expansion
+### nemo Debug Info: gridding mode: sky->gal plane
+### Warning [ccdvel]: 3600/16384 cells with no signal
+Mapsize: 128 * 128 * 1
+Cell size: 1 * 1 * 1
+Center: 63.5 * 63.5 pixels
+BLC: 0 0
+Systemic velocity: 0
+Min and max in map: -68.6195 68.6195
+Running rotcur1
+rotcur in=map1.vel radii=0:100:5 vrot=10,100 pa=30 inc=60 vsys=0 reuse=f \
+	   tab=map1.rotcur units=sec,1 > /dev/null ; nemo.coverage rotcur.c
+### nemo Debug Info: rotcur: NEMO VERSION 2.12
+### Warning [rotcur]: New feature: fitted points will not be reused: reuse=f
+### Warning [rotcur]: nllsqfit=-4<0: KGB must find better solution (npoints=30)
+### Warning [rotcur]: ROTCUR: problems with matrix inversion
+
+ Error correction factor: : 1
+ average inclination      :    59.92  (   0.240)  degrees
+ average position angle   :    30.05  (   0.216)  degrees
+ average systemic velocity:    -0.00  (   0.002)  km/s
+ average x-position       :    63.50  (   0.001)  grids
+ average y-position       :    63.50  (   0.003)  grids
+ccdprint map1.vel x= y= newline=t label=x,y | awk '{if (NF==3 && $3 != 0) print $1-63.5,$2-63.5,$3}' > map1.tab
+Running rotcur2
+rotcur in=map1.tab radii=0:100:5 vrot=10,100 pa=30 inc=60 vsys=0 reuse=f imagemode=f \
+	   tab=map2.rotcur units=sec,1 > /dev/null ; nemo.coverage rotcur.c
+### nemo Debug Info: rotcur: NEMO VERSION 2.12
+### Warning [rotcur]: New feature: fitted points will not be reused: reuse=f
+### Warning [rotcur]: nllsqfit=-4<0: KGB must find better solution (npoints=30)
+### Warning [rotcur]: ROTCUR: problems with matrix inversion
+
+ Error correction factor: : 1
+ average inclination      :    59.91  (   0.237)  degrees
+ average position angle   :    30.05  (   0.216)  degrees
+ average systemic velocity:     0.00  (   0.002)  km/s
+ average x-position       :    -0.00  (   0.001)  grids
+ average y-position       :     0.00  (   0.003)  grids
+rotcurshape in=map1.vel radii=0,60 pa=30 inc=60 vsys=0 \
+	   tab=map1.rotcurshape units=sec,1 rotcur1=core1,100,20,1,1 > /dev/null; nemo.coverage rotcurshape.c
+### nemo Debug Info: ROTCUR1: name=core1 parameters=100 (free) 20 (free) 
+### nemo Debug Info: rotcurshape: NEMO VERSION 1.4
+### nemo Debug Info: rotfit: scratch arrays with npts=16384
+
+VSYS: -5.66437e-16 0.00962557
+XPOS: 63.5 0.00653768
+YPOS: 63.5 0.00864389
+PA:   30.0013 0.00902789
+INC:  59.9993 0.0198592
+P1:  100.174 0.0640064
+P2:  19.41 0.0375674
+NPT:  5658
+
+ Error correction factor: : 1
+rotcurtab radii=0:5 rotcur1=linear,1 rotcur2=core,1,2,3; nemo.coverage rotcurtab.c
+### nemo Debug Info: ROTCUR1: name=linear parameters=1 
+### nemo Debug Info: ROTCUR2: name=core parameters=1 2 3 
+0  0
+1  1.10956
+2  2.15173
+3  3.13706
+4  4.11394
+5  5.09505
+Running velcube
+velcube cube1 map1.vel map1.den sigdefault=5
+### Warning [velcube]: 15728/16384 pixels outside your zrange -2 2
+### nemo Debug Info: Minvel=-88.6195 Maxvel=88.6195 (using 4 sigma) Minsig=5 Maxsig=5
+### Warning [velcube]: 838750/1048576 cells with no signal
+Min and max in map: 1.96029e-05 0.245919
+ccdmom cube1 cube1.den 3 0;  ccdmath map1.den,cube1.den - %1-%2 |  ccdstat - bad=0
+### nemo Debug Info: Reducing 128*128*64 to a 128*128*1 cube
+Min=-0.000000  Max=0.696840
+Number of points      : 11932
+Mean and dispersion   : 0.064754 0.098790
+Skewness and kurtosis : 2.728215 8.637930
+Sum and Sum*Dx*Dy*Dz  : 772.647758 772.647758
+4452/16384 out-of-range points discarded
+ccdmom cube1 cube1.vel 3 1;  ccdmath map1.vel,cube1.vel - %1-%2 |  ccdstat - bad=0
+### nemo Debug Info: Reducing 128*128*64 to a 128*128*1 cube
+Min=-68.619526  Max=68.619526
+Number of points      : 12784
+Mean and dispersion   : 0.008829 41.034336
+Skewness and kurtosis : -0.000590 -1.299648
+Sum and Sum*Dx*Dy*Dz  : 112.875000 112.875000
+3600/16384 out-of-range points discarded
+ccdmom cube1 cube1.sig 3 2;  ccdstat cube1.sig bad=0
+### nemo Debug Info: Reducing 128*128*64 to a 128*128*1 cube
+Min=0.000003  Max=0.049542
+Number of points      : 3612
+Mean and dispersion   : 0.001056 0.002521
+Skewness and kurtosis : 7.947673 105.193192
+Sum and Sum*Dx*Dy*Dz  : 3.813782 15.255128
+12772/16384 out-of-range points discarded
+velfit in=map1.vel radii=0:100:5 pa=30 inc=60 out=map2.vel
+### Warning [velfit]: New out= mode mode=vtan [0]
+### nemo Debug Info: Nundf=3600/16384 Nout=0 Nang=0 (sum=3600)
+### nemo Debug Info: Rmin/max = 0.774907 99.9645
+### nemo Debug Info: Data min/max = 0 84.9286
+==========================================================
+Cleaning src/image/trans
+Creating ccd.in
+ccdmath out=ccd.in "fie=10*%x+sqrt(%y)"  size=5,5,1 ; nemo.coverage ccdmath.c
+### nemo Debug Info: Generating a map from scratch
+Running ccdmath
+ccdmath ccd.in - %1 |  ccdprint - x= y= format=%7.3f ; nemo.coverage ccdmath.c
+  2.000  12.000  22.000  32.000  42.000 
+  1.732  11.732  21.732  31.732  41.732 
+  1.414  11.414  21.414  31.414  41.414 
+  1.000  11.000  21.000  31.000  41.000 
+  0.000  10.000  20.000  30.000  40.000 
+Running ccdflip
+ccdflip ccd.in - xy |  ccdprint - x= y= format=%7.3f ; nemo.coverage ccdflip.c
+ 40.000  41.000  41.414  41.732  42.000 
+ 30.000  31.000  31.414  31.732  32.000 
+ 20.000  21.000  21.414  21.732  22.000 
+ 10.000  11.000  11.414  11.732  12.000 
+  0.000   1.000   1.414   1.732   2.000 
+Running ccdsmooth
+ccdsmooth ccd.in - 1 |  ccdprint - x= y= format=%7.3f ; nemo.coverage ccdsmooth.c
+### nemo Debug Info: dir=x sigma=0.424628 cell=1
+  2.295  11.319  20.763  30.207  36.925 
+  2.189  11.729  21.729  31.728  38.855 
+  1.886  11.409  21.409  31.408  38.553 
+  1.469  10.967  20.967  30.966  38.136 
+  0.577   9.500  18.945  28.389  35.207 
+Running ccdgen
+ccdgen out=- object=exp pa=30 |  ccdprint - x= y= format=%7.3f ; nemo.coverage ccdgen.c
+### nemo Debug Info: exp: disk with pa=30 inc=0
+### nemo Debug Info: Generating a map from scratch
+### Warning [ccdgen]: cube
+### nemo Debug Info: exp: center pixel: 4.5 4.5
+### nemo Debug Info: exp: 1 1
+  0.002   0.003   0.006   0.009   0.011   0.011   0.009   0.006   0.003   0.002 
+  0.003   0.007   0.014   0.022   0.029   0.029   0.022   0.014   0.007   0.003 
+  0.006   0.014   0.029   0.054   0.078   0.078   0.054   0.029   0.014   0.006 
+  0.009   0.022   0.054   0.120   0.206   0.206   0.120   0.054   0.022   0.009 
+  0.011   0.029   0.078   0.206   0.493   0.493   0.206   0.078   0.029   0.011 
+  0.011   0.029   0.078   0.206   0.493   0.493   0.206   0.078   0.029   0.011 
+  0.009   0.022   0.054   0.120   0.206   0.206   0.120   0.054   0.022   0.009 
+  0.006   0.014   0.029   0.054   0.078   0.078   0.054   0.029   0.014   0.006 
+  0.003   0.007   0.014   0.022   0.029   0.029   0.022   0.014   0.007   0.003 
+  0.002   0.003   0.006   0.009   0.011   0.011   0.009   0.006   0.003   0.002 
+==========================================================
+Cleaning src/image/wcs
+Running wcs
+wcs ref=30,30 refpix=128,128 inc=0.1,0.1 pix=10,10
+18.2 18.2   1:12:48.000 018:11:60.000
+18.2 18.2 should be on the line before
+wcs ref=30,30 refpix=128,128 inc=0.1,0.1 pos=10,10
+-72 -72 
+-72 -72 should be on the line before
+==========================================================
+Cleaning src/kernel/fortran
+make: Nothing to be done for `all'.
+==========================================================
+Cleaning src/kernel/io
+Creating rsf.in
+Running rsf
+rsf rsf.in rsf.out; nemo.coverage rsf.c ; nemo.coverage rsf.c
+Running tsf
+tsf rsf.out maxprec=t			; nemo.coverage tsf.c
+int MyI 4 
+float MyF  1.23450005e+00 
+double MyD  9.8765432099999995e+00 
+char MyS[5] "nemo"
+set MySet
+  int MyI2 1 
+tes
+Checking size of tsf.out
+Running csf
+csf rsf.out csf.out MySet		; nemo.coverage csf.c
+### nemo Debug Info: On top-level: 1 items  read, 1 items written
+csf rsf.out - MyD |  tsf - maxprec=t	; nemo.coverage csf.c tsf.c
+### nemo Debug Info: On top-level: 1 items  read, 1 items written
+double MyD  9.8765432099999995e+00 
+csf rsf.out - MyD convert=d2f |  tsf - maxprec=t ; nemo.coverage csf.c tsf.c
+### nemo Debug Info: On top-level: 1 items  read, 1 items written
+float MyD  9.87654305e+00 
+csf rsf.out - MyF |  tsf - maxprec=t	; nemo.coverage csf.c tsf.c
+### nemo Debug Info: On top-level: 1 items  read, 1 items written
+float MyF  1.23450005e+00 
+tsf csf.out				; nemo.coverage tsf.c
+set MySet
+  int MyI2 1 
+tes
+Running hisf
+hisf csf.out				; nemo.coverage history.c
+==========================================================
+Cleaning src/kernel/misc
+Running xrandom
+uniform seed=5 n=5
+xrandom seed=5 n=5 report=t		; nemo.coverage xrandom.c
+Seed used = 5
+0.283561
+0.56069
+0.53493
+0.109894
+0.481819
+Mean and dispersion  : 0.394179 0.172204
+Skewness and kurtosis: -0.636453 -1.202954
+gauss seed=5 n=5
+xrandom seed=5 n=5 gauss=t report=t	; nemo.coverage xrandom.c
+Seed used = 5
+-1.72184
+0.482803
+0.0881416
+-0.984386
+-0.0142263
+Mean and dispersion  : -0.429901 0.806317
+Skewness and kurtosis: -0.517217 -1.260559
+1.41421
+nemoinp 1:10:2 newline=f	 ; nemo.coverage nemoinp.c
+1 3 5 7 9
+
+==========================================================
+Cleaning src/kernel/tab
+Creating tab.in
+nemoinp 1:100 > tab.in
+Running tabmath
+tabmath tab.in tab.out 'sqrt(%1)'; nemo.coverage tabmath.c
+Running tabplot
+tabmath tab.in - 'sqrt(%1)' |  tabplot - ; nemo.coverage tabplot.c
+### nemo Debug Info: read 100 points
+### nemo Debug Info: min and max value in xcolumns 1: [1.000000 : 100.000000]
+### nemo Debug Info: min and max value in ycolumns 2: [1.000000 : 10.000000]
+### nemo Debug Info: X:min and max value reset to : [-3.950000 : 104.950000]
+### nemo Debug Info: Y:min and max value reset to : [0.550000 : 10.450000]
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+Running
+nemoinp 1:1000 |  tabmath - - 'rang(0,1)' all seed=123 |  tabhist - ; nemo.coverage tabhist.c
+### nemo Debug Info: Reading 1 column(s)
+### nemo Debug Info: Under/Over flow: 0 0
+### nemo Debug Info: read 1000 values
+### nemo Debug Info: min and max value in column(s)  1: [-2.73132 : 3.34828]
+### nemo Debug Info: Number of points     : 1000
+### nemo Debug Info: Mean and dispersion  : 0.112975 1.00499 0.0317964
+### nemo Debug Info: Skewness and kurtosis: 0.0091138 -0.0715222
+### nemo Debug Info: h3 and h4            : 0.00131546 -0.00364985
+### nemo Debug Info: Median               : 0.111046
+### nemo Debug Info: Sum                  : 112.975
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+nemoinp 1:100000 nmax=100000 |  tabmath - - 'rang(0,1)' all seed=123 |  tabhist - nmax=-100000; nemo.coverage tabhist.c
+### nemo Debug Info: Reading 1 column(s)
+### nemo Debug Info: Under/Over flow: 0 0
+### nemo Debug Info: read 100000 values
+### nemo Debug Info: min and max value in column(s)  1: [-4.4138 : 4.41422]
+### nemo Debug Info: Number of points     : 100000
+### nemo Debug Info: Mean and dispersion  : -0.00355447 0.999527 0.0031608
+### nemo Debug Info: Skewness and kurtosis: 0.00331146 0.000675738
+### nemo Debug Info: h3 and h4            : 0.000477968 3.44836e-05
+### nemo Debug Info: Median               : -0.00518277
+### nemo Debug Info: Sum                  : -355.447
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+Running
+nemoinp 1:2:0.001 |  tabmath - - '%1*%1' |  tabspline - y=2;  nemo.coverage tabspline.c
+1.41421 2Running
+nemoinp 1:2:0.001 |  tabmath - - '%1+rang(0,0.1)' seed=123 |  tablsqfit - ; nemo.coverage tablsqfit.c
+### nemo Debug Info: -: reading X column(s) 1 and Y column(s) 2
+      a  =    1.005893       uncertainty:  0.010997 
+      b  =    0.002476       uncertainty:  0.016798 
+      x0 =   -0.002461       uncertainty:  0.016700 
+      y0 =    0.002476       uncertainty:  0.016798 
+      chi-squared:       10.097401 
+      goodness-of-fit:    1.000000 (no Y errors supplied [dycol=])
+      r:  0.946412
+      prob:  0
+      z:  1.79621
+Running
+nemoinp 1:100 |  tabmath - - '4+exp(-(%1-50)**2/(200))+rang(0,0.1)' seed=123 |\
+		 tabnllsqfit - fit=gauss1d par=4,1,50,10; nemo.coverage tabnllsqfit.c
+nrt=11
+Fitting a+b*exp(-(x-c)^2/(2*d^2)):  
+a= 4.02838 0.016115 
+b= 0.998781 0.0340908 
+c= 50.1135 0.37092
+d= 9.98555 0.43531
+rms2/chi2= 1.16935
+rms/chi = 1
+Running
+Sat Sep  8 21:46:40 2001
+Running
+tabfilter g tbb=1000
+1000 1.37419 -0.345113
+Running
+### nemo Debug Info: Reading 1 column(s)
+1 
+3 
+5 
+7 
+Running  with gauss1d(B=2 A=3 x0=1 b=1)
+nemoinp 0:4 | tabmath - - '0+3*exp(-((%1-1)**2)/2)+rang(0,0.01)' seed=123 > gauss1d.tab
+tablsqfit   gauss1d.tab fit=gauss1d
+### nemo Debug Info: gauss1d.tab: reading X column(s) 1 and Y column(s) 2
+gauss1d fit:
+0.616032 0.927376 -0.468122 
+
+  y = A * exp( -[(x-x0)^2]/2b^2 ):
+
+     A  = 2.93095
+     x0 = 0.990528
+     b  = 1.03349
+tabnllsqfit gauss1d.tab fit=gauss1d par=0,3,2,1 free=0,1,1,1
+nrt=16
+Fitting a+b*exp(-(x-c)^2/(2*d^2)):  
+a= 0 0 
+b= 3.00221 0.0152429 
+c= 0.999846 0.00609885
+d= 1.00554 0.00674677
+rms2/chi2= 0.000519684
+rms/chi = 0.981813
+tabnllsqfit gauss1d.tab fit=gauss1d par=0,3,2,1 free=1,1,1,1
+nrt=17
+Fitting a+b*exp(-(x-c)^2/(2*d^2)):  
+a= 0.0166118 0.016841 
+b= 2.98866 0.0207508 
+c= 0.99911 0.00620267
+d= 0.99921 0.00928753
+rms2/chi2= 0.000265545
+rms/chi = 0.986999
+Running  with gauss2d(B=0 A=3 x0=1 y0=1 b=1)
+ccdmath "" - "0+3*exp(-((%x-1)**2+(%y-1)**2)/2)+rang(0,0.01)" seed=123 size=4,4 |\
+	    ccdprint - x= y= label=x,y newline=t > gauss2d.tab
+### nemo Debug Info: Generating a map from scratch
+tablsqfit   gauss2d.tab 1,2 3 fit=gauss2d
+### nemo Debug Info: gauss2d.tab: reading X column(s) 1,2 and Y column(s) 3
+gauss2d fit:
+0.144836 1.02734 1.0251 -0.519395 
+
+  y = A * exp( -[(x-x0)^2 + (y-y0)^2]/2b^2 ):
+
+     A  = 3.18558
+     x0 = 0.988977
+     y0 = 0.986818
+     b  = 0.981152
+tabnllsqfit gauss2d.tab 1,2 3 fit=gauss2d par=0,3,1,1,1 free=0,1,1,1,1
+nrt=11
+Fitting a+b*exp(-[(x-c)^2+(y-d)^2]/(2*e^2)):  
+a= 0 0 
+b= 3.01272 0.010921 
+c= 1.00106 0.00366741
+d= 1.00128 0.00366728
+e= 1.00131 0.00290391
+rms2/chi2= 0.00204246
+rms/chi = 1
+tabnllsqfit gauss2d.tab 1,2 3 fit=gauss2d par=0,3,1,1,1 free=1,1,1,1,1
+nrt=11
+Fitting a+b*exp(-[(x-c)^2+(y-d)^2]/(2*e^2)):  
+a= 0.00410364 0.0102845 
+b= 3.01048 0.0126704 
+c= 1.00085 0.00383922
+d= 1.00108 0.00383906
+e= 0.999476 0.00547795
+rms2/chi2= 0.00201367
+rms/chi = 1
+Running
+nemoinp 1:1000 |  tabmath - - 'rang(0,1)' all seed=123 |  meanmed - ; nemo.coverage meanmed.c
+  Npts       Median        Mean         Rms          Min          Max
+  550   0.715085   0.836967   0.627633   0.00052585   3.34828 
+==========================================================
+Cleaning src/nbody/cores
+Running bodytrans
+bodytrans x; nemo.coverage bodytrans.c
+x = 0.5 ()
+bodytrans y;  bodytrans z;  bodytrans r; 
+y = -0.5 ()
+z = 1 ()
+r = 1.22474 ()
+bodytrans 'sqrt(x*x+y*y)>0' int
+sqrt(x*x+y*y)>0 = 1 (bti__0)
+bodytrans 'sqrt(x*x+y*y)>1' int
+sqrt(x*x+y*y)>1 = 0 (bti__1)
+bodytrans 'sqrt(x*x+y*y)>2' int
+sqrt(x*x+y*y)>2 = 0 (bti__2)
+==========================================================
+Cleaning src/nbody/evolve/aarseth/nbody0
+Creating nbody0.in
+mkplummer nbody0.in 10 seed=123
+echo "10,0.02,0.05,2,0.0001,1"        > nbody0.tab
+snapprint nbody0.in m,x,y,z,vx,vy,vz                      >> nbody0.tab
+### nemo Debug Info: m x y z vx vy vz 
+Running nbody0
+nbody0 nbody0.in nbody0.out tcrit=2 > nbody0.log 2>&1
+snaptrim nbody0.out - times=2 | tsf -
+### nemo Debug Info: time = 2	npart =   1	ndiag =   0	outputing particles
+char Headline[28] "init_xrandom: seed used 123"
+char History[42] "snaptrim nbody0.out - times=2 VERSION=2.2"
+char History[49] "nbody0 nbody0.in nbody0.out tcrit=2 VERSION=2.0a"
+char History[44] "mkplummer nbody0.in 10 seed=123 VERSION=2.9"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 2.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] 0.133940 0.209280 0.290292 0.556729 1.00067 -0.149692 5.59113 -0.246788 -1.04959 0.365171 0.120772 0.244237 -0.107914 0.269903 0.167544 0.102670 -0.264229 0.272836 -0.889557 0.697405 0.0178010 -0.270314 -0.136634 0.123734 -0.357360 -0.278575 -0.157350 -0.500976 0.121049 0.122677 0.294877 0.291233 0.428206 0.0916926 0.164702 -1.05409 0.935065 -1.26603 -0.431633 0.527215 0.0231418 0.106207 -0.557528 0.175894 0.428923 -0.268114 -0.00619282 0.714053 -0.242601 -0.323867 -0.0283303 -0.566429 -0.778313 -0.330925 -4.80019 0.471885 0.334563 -0.0378342 -0.244504 -0.0487522 
+  tes
+tes
+Running nbody00
+nbody00 nbody0.in nbody00.out tcrit=2 > nbody00.log 2>&1
+snaptrim nbody00.out - times=2 | tsf -
+### nemo Debug Info: time = 2	npart =   1	ndiag =   0	outputing particles
+char Headline[28] "init_xrandom: seed used 123"
+char History[43] "snaptrim nbody00.out - times=2 VERSION=2.2"
+char History[51] "nbody00 nbody0.in nbody00.out tcrit=2 VERSION=2.0a"
+char History[44] "mkplummer nbody0.in 10 seed=123 VERSION=2.9"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 2.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] 0.133940 0.209280 0.290292 0.556729 1.00067 -0.149692 5.59113 -0.246788 -1.04959 0.365171 0.120772 0.244237 -0.107914 0.269903 0.167544 0.102670 -0.264229 0.272836 -0.889557 0.697405 0.0178010 -0.270314 -0.136634 0.123734 -0.357360 -0.278575 -0.157350 -0.500976 0.121049 0.122677 0.294877 0.291233 0.428206 0.0916926 0.164702 -1.05409 0.935065 -1.26603 -0.431633 0.527215 0.0231418 0.106207 -0.557528 0.175894 0.428923 -0.268114 -0.00619282 0.714053 -0.242601 -0.323867 -0.0283303 -0.566429 -0.778313 -0.330925 -4.80019 0.471885 0.334563 -0.0378342 -0.244504 -0.0487522 
+  tes
+tes
+snapcmp nbody0.out nbody00.out
+# time  Min  Qlow Median Qhigh  Max   Mean Sigma
+0   0 0 0 0 0  0 0
+0.25   2.77556e-16 2.24906e-15 6.68492e-15 8.32399e-15 1.6596e-14  6.96701e-15 5.47605e-15
+0.5   7.82447e-15 1.04604e-14 1.38375e-14 3.03222e-14 5.69885e-14  2.21709e-14 1.48518e-14
+0.75   1.21724e-14 1.87691e-14 2.89351e-14 3.69477e-14 1.46236e-13  4.51881e-14 4.01695e-14
+1   1.30799e-14 2.23122e-14 4.59077e-14 5.93626e-14 1.67841e-12  2.22146e-13 4.88285e-13
+1.25   5.43805e-14 7.1537e-14 8.14891e-14 5.39117e-13 2.73078e-12  5.27571e-13 7.74337e-13
+1.5   3.22829e-14 9.088e-14 1.32879e-13 9.80402e-13 2.61598e-12  8.10631e-13 9.08899e-13
+1.75   4.52052e-14 1.45691e-13 3.43355e-13 1.37716e-12 3.93759e-12  1.21703e-12 1.36614e-12
+2   6.25024e-14 2.79404e-13 9.42968e-13 1.8739e-12 6.20089e-12  1.91814e-12 2.10124e-12
+nbody0  /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/data/figure8.dat - | tsf - | tail -13 
+char History[95] "nbody0 /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/data/figure8.dat - VERSION=2.0a"
+char History[83] "tabtos figure8.mpv figure8.dat nbody,time mass,x,y,z,vx,vy,vz error=1 VERSION=1.3d"
+nbody00 /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/data/figure8.dat - | tsf - | tail -13 
+### Warning [nbody00]: You have hit upon an F2DOT=0 case, correcting....
+### nemo Debug Info: time = 0   steps = 0   energy = -1.28449 cpu =          0 min
+### nemo Debug Info: time = 0.25   steps = 17   energy = -1.28449 cpu =          0 min
+### nemo Debug Info: time = 0.5   steps = 36   energy = -1.28449 cpu =          0 min
+### nemo Debug Info: time = 0.75   steps = 55   energy = -1.28448 cpu =          0 min
+### nemo Debug Info: time = 1   steps = 73   energy = -1.28449 cpu =          0 min
+### nemo Debug Info: time = 1.25   steps = 91   energy = -1.28449 cpu =          0 min
+### nemo Debug Info: time = 1.5   steps = 111   energy = -1.28448 cpu =          0 min
+### nemo Debug Info: time = 1.75   steps = 129   energy = -1.28447 cpu =          0 min
+### nemo Debug Info: time = 2   steps = 148   energy = -1.28449 cpu =          0 min
+### nemo Debug Info: Time spent in searching for next advancement: 0
+### nemo Debug Info: Energy conservation: 4.37828e-06 / -1.28449 = -3.40859e-06
+### nemo Debug Info: Time resets needed 0 times / 9 dumps
+  tes
+tes
+set SnapShot
+  set Parameters
+    int Nobj 3 
+    double Time 2.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[3] 1.00000 1.00000 1.00000 
+    double PhaseSpace[3][2][3] -0.107134 -0.0906970 0.00000 0.934759 0.847420 0.00000 -0.919741 0.273173 0.00000 -0.609820 -0.395000 0.00000 1.02687 -0.182481 0.00000 -0.324941 -0.452423 0.00000 
+  tes
+tes
+==========================================================
+Cleaning src/nbody/evolve/aarseth/tools
+Running runbody1 testrun for NBODY1
+### nemo Debug Info: stou4 -
+### nemo Debug Info: nb3header_c: Opening run2/OUT3 using INTEGER*4 in native mode
+### nemo Debug Info: Saving model 1 (nbody=10 time=0)
+### nemo Debug Info: Saving model 2 (nbody=10 time=1.30619)
+### nemo Debug Info: Saving model 3 (nbody=10 time=2.61187)
+### nemo Debug Info: Saving model 4 (nbody=10 time=3.91923)
+### nemo Debug Info: Saving model 5 (nbody=10 time=5.22389)
+### nemo Debug Info: Saving model 6 (nbody=10 time=6.52854)
+### nemo Debug Info: Saving model 7 (nbody=10 time=7.84395)
+### nemo Debug Info: Saving model 8 (nbody=10 time=9.14066)
+### nemo Debug Info: Saving model 9 (nbody=10 time=10.4463)
+### nemo Debug Info: Saved 9 snapshots
+### nemo Debug Info: time = 0	npart =   1	ndiag =   0	outputing particles
+### Warning [snapcmp]: bits = 0x7, 0x47 are different
+# time  Min  Qlow Median Qhigh  Max   Mean Sigma
+0   5.36818e-08 5.56612e-08 5.84371e-08 6.54397e-08 1.59336e-07  7.21995e-08 3.03095e-08
+runbody4                     outdir=run4a nbody=25 tcrit=0 KZ5=0 KZ22=1 > run4a.log
+### nemo Debug Info: KZ 5=0
+### nemo Debug Info: KZ 22=1
+u3tos    in=run4a/OUT3       out=run4a/input.snap  mode=4
+### nemo Debug Info: nb3header_c: Opening run4a/OUT3 using INTEGER*4 in native mode
+### nemo Debug Info: Saving model 1 (nbody=25 time=0)
+### nemo Debug Info: Saved 1 snapshots
+runbody4                     outdir=run4b nbody=25 tcrit=10 KZ5=0 KZ22=1 deltat=1 > run4b.log
+### nemo Debug Info: KZ 5=0
+### nemo Debug Info: KZ 22=1
+runbody4 in=run4a/input.snap outdir=run4c          tcrit=10              deltat=1 > run4c.log
+### Warning [runbody4]: patching kz[22]=1 since in= was given
+### nemo Debug Info: Using ascii printout with format=%g to convert data for nbody4
+u3tos    in=run4b/OUT3 out=run4b/out.snap mode=4
+### nemo Debug Info: nb3header_c: Opening run4b/OUT3 using INTEGER*4 in native mode
+### nemo Debug Info: Saving model 1 (nbody=25 time=0)
+### nemo Debug Info: Saving model 2 (nbody=25 time=2)
+### nemo Debug Info: Saving model 3 (nbody=25 time=4)
+### nemo Debug Info: Saving model 4 (nbody=25 time=6)
+### nemo Debug Info: Saving model 5 (nbody=25 time=8)
+### nemo Debug Info: Saving model 6 (nbody=25 time=10)
+### nemo Debug Info: Saved 6 snapshots
+u3tos    in=run4c/OUT3 out=run4c/out.snap mode=4
+### nemo Debug Info: nb3header_c: Opening run4c/OUT3 using INTEGER*4 in native mode
+### nemo Debug Info: Saving model 1 (nbody=25 time=0)
+### nemo Debug Info: Saving model 2 (nbody=25 time=2)
+### nemo Debug Info: Saving model 3 (nbody=25 time=4)
+### nemo Debug Info: Saving model 4 (nbody=25 time=6)
+### nemo Debug Info: Saving model 5 (nbody=25 time=8)
+### nemo Debug Info: Saving model 6 (nbody=25 time=10)
+### nemo Debug Info: Saved 6 snapshots
+snapcmp run4b/out.snap  run4c/out.snap
+# time  Min  Qlow Median Qhigh  Max   Mean Sigma
+0   9.98385e-08 4.13826e-07 4.60009e-07 5.14684e-07 6.25139e-07  4.60075e-07 1.11534e-07
+2   5.39743e-07 1.63669e-06 3.4509e-06 7.6956e-06 4.12083e-05  8.6697e-06 1.09259e-05
+4   1.35002e-06 3.94546e-05 9.88536e-05 0.000461184 0.0194828  0.00149941 0.0044362
+6   4.78284e-05 0.00130801 0.0052773 0.0133538 0.115405  0.0184127 0.0312914
+8   0.000334069 0.0355219 0.0859451 0.220448 0.872589  0.163835 0.188266
+10   0.00212669 0.277042 0.546797 0.986325 25.4599  1.84093 4.89714
+==========================================================
+Cleaning src/nbody/evolve/dehnen
+Running gyrfalcON
+mkplum p1024.in 1024 seed=1024
+mkplum: error while loading shared libraries: libWDutils.so: cannot open shared object file: No such file or directory
+make: *** [gyrfalcON] Error 127
+==========================================================
+Cleaning src/nbody/evolve/directcode
+Running directcode
+directcode out=bench.dat > bench.log; nemo.coverage code.c
+
+Direct code: test data
+
+       nbody        freq         eps
+         128       32.00      0.0500
+
+	options: mass,phase
+
+        tnow       T+U       T/U   cputime
+       0.000   -0.2652   -0.5456      0.00
+
+	        cm pos   -0.0000    0.0000    0.0000
+	        cm vel   -0.0000    0.0000   -0.0000
+
+...
+
+        tnow       T+U       T/U   cputime
+       2.000   -0.2652   -0.4810      0.00
+
+	        cm pos    0.0000    0.0000   -0.0000
+	        cm vel   -0.0000    0.0000   -0.0000
+
+	particle data written
+==========================================================
+Cleaning src/nbody/evolve/flowcode
+Copying vrtm51.c locally
+cp /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/src/nbody/evolve/flowcode/vrtm51.c .
+make -f /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/lib/Makefile.lib vrtm51.so
+make[1]: Entering directory `/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/tmp/test4451'
+gcc -g -O2 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -fpic -rdynamic -I/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/inc -I/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/lib   -Dlinux -DSYSV  -c vrtm51.c
+ldso vrtm51
+CXX=g++
+make[1]: Leaving directory `/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/tmp/test4451'
+nemoinp 0:360 | tabmath - - "0,1,1" > bench.tab
+mkflowdisk bench.in 100 \
+	  seed=123 \
+	  rmin=1 rmax=2 pitch=0.1 \
+	  potname=vrtm51 potpars=0,0.1,1,0,1,2 potfile=bench.tab
+### nemo Debug Info: table has 361 entries
+Running flowcode
+flowcode in=bench.in out=bench.dat \
+		freq=200 tstop=1 \
+		potname=vrtm51 potpars=0,0.1,1,0,1,2 potfile=bench.tab  sigma=10 \
+		> bench.log; nemo.coverage flowcode.c
+### nemo Debug Info: table has 361 entries
+
+
+
+       nbody        freq         eta       sigma       ome          mode       tstop
+         100    200.0000      0.0000      0.1745      0.0000           0        1.00
+
+
+          tnow         T+U         T/U     cputime
+         0.000    1.500000      0.5000        0.00
+
+	        cm pos   -0.2535    0.0426    0.0000
+	        cm vel   -0.0324   -0.1463    0.0000
+
+	particle data written
+...
+
+          tnow         T+U         T/U     cputime
+         1.000    1.500000      0.5000        0.00
+
+	        cm pos   -0.2425   -0.1045    0.0000
+	        cm vel    0.0453   -0.1526    0.0000
+
+	particle data written
+==========================================================
+Cleaning src/nbody/evolve/hackcode/hackcode1
+Running hackcode1
+hackcode1 out=bench.dat > bench.log; nemo.coverage hackcode1.c
+
+Hack code: test data
+
+       nbody        freq         eps         tol
+         128       32.00      0.0500      1.0000
+
+	options: mass,phase
+
+        tnow       T+U       T/U     nttot     nbavg     ncavg   cputime
+       0.000   -0.2675   -0.5434      3864         9        20      0.00
+
+	        cm pos   -0.0000    0.0000    0.0000
+	        cm vel   -0.0000    0.0000   -0.0000
+
+...
+
+        tnow       T+U       T/U     nttot     nbavg     ncavg   cputime
+       2.000   -0.2647   -0.4857      4899        17        20      0.00
+
+	        cm pos    0.0002   -0.0018    0.0007
+	        cm vel    0.0003   -0.0019    0.0009
+
+	particle data written
+==========================================================
+Cleaning src/nbody/evolve/hackcode/treecode1
+Running treecode1
+treecode1 out=bench.dat nbody=128 > bench.log; nemo.coverage treecode.c
+
+Hierarchical N-body code (theta scan)
+
+   nbody     dtime       eps     theta   usequad     dtout     tstop
+     128   0.03125    0.0250      1.00     false   0.25000    2.0000
+
+	   rsize  tdepth   ftree  actmax    nbbtot    nbctot   CPUfc
+	    16.0       7   2.671     177      8334      2176   0.000
+
+        time   |T+U|       T      -U    -T/U  |Vcom|  |Jtot|  CPUtot
+       0.000 0.23928 0.22889 0.46817 0.48890 0.00000 0.07133   0.000
+
+	data output to file bench.dat at time 0.000000
+
+...
+
+	   rsize  tdepth   ftree  actmax    nbbtot    nbctot   CPUfc
+	    16.0       7   2.671     176      8173      2182   0.000
+
+        time   |T+U|       T      -U    -T/U  |Vcom|  |Jtot|  CPUtot
+       2.000 0.23655 0.23686 0.47341 0.50032 0.00057 0.07147   0.000
+
+	data output to file bench.dat at time 2.000000
+==========================================================
+Cleaning src/nbody/evolve/scfm
+Creating scfm.in
+mkplummer scfm.in 10 seed=123
+Running runscfm
+runscfm scfm.in scfm.run > scfm.log
+### nemo Debug Info: snapprint /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/tmp/test4451/scfm.in m,x,y,z,vx,vy,vz header=t > SCFBI
+### nemo Debug Info: m x y z vx vy vz 
+### nemo Debug Info: [reading 10 bodies at time 0.000000]
+### nemo Debug Info: [reading 10 bodies at time 1.000000]
+tsf scfm.run/scfm.dat
+char History[59] "tabtos - scfm.dat nbody,time mass,pos,vel,phi VERSION=1.5a"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] -0.609486 -0.221687 -0.450963 -0.0766784 -0.209397 0.396561 4.80925 -0.486182 -1.52575 0.418474 0.117766 0.230193 0.545314 0.0795464 0.0632245 0.0867019 -0.109128 -0.282036 0.377209 -0.213318 -0.0118330 -0.739982 0.649302 -0.0595349 -0.0724005 0.706104 0.0899005 0.158021 0.0702185 0.316083 -0.561212 -0.324160 1.18761 0.379356 0.257397 0.0247723 -0.312291 -0.902718 -0.451821 0.669557 -0.463708 -0.117066 0.369670 0.154617 0.681866 -0.0283658 -0.0937881 -0.135925 0.106249 0.255479 -0.0102538 -0.757828 0.0154417 -0.328447 -4.65230 0.952320 0.428016 -0.109256 -0.234103 -0.0446015 
+    double Potential[10] -1.15069 -0.224829 -1.73064 -1.87400 -1.26616 -0.782686 -0.952477 -1.21731 -2.26835 -0.248411 
+  tes
+tes
+char History[59] "tabtos - scfm.dat nbody,time mass,pos,vel,phi VERSION=1.5a"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 1.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] -0.310119 -0.145262 0.109259 0.736628 0.824936 0.761737 5.21154 -0.366933 -1.28922 0.386172 0.120057 0.241886 -0.241640 0.0899310 0.235927 -0.373861 0.418829 0.430021 -0.709579 -0.0954642 -0.0829982 -0.549090 -0.775607 0.0399970 0.0347018 0.164067 0.243106 -0.141797 -1.40133 -0.191660 -0.0871390 -0.0168691 0.994880 0.539022 0.336736 -0.508886 0.332082 -1.13321 -0.461495 0.586525 -0.00125255 0.112819 0.000269243 -0.00872812 -0.0700833 -1.47901 0.151225 -2.09117 0.0416864 0.00641935 -0.0659634 -1.04895 0.333778 0.728102 -4.74064 0.714102 0.382514 -0.0668396 -0.242011 -0.0460648 
+    double Potential[10] -2.54358 -0.211332 -2.57691 -1.49914 -2.65320 -1.09839 -0.830246 -5.85487 -5.74561 -0.253391 
+  tes
+tes
+==========================================================
+Cleaning src/nbody/evolve/sellwood/tools
+mkplummer run1.in 100
+rungalaxy in=run1.in outdir=run1
+ galaxy V1.3 
+ Maximum number of particles (mbuff):       100000
+ Maximum gridsize:           33          33          33
+ Greens function creation complete
+         100           8         800       80000
+          28  particles outside the grid at the start
+ Run (re)started at time   0.000000    
+   and will stop after the step at time    1.050000    
+ Time-centering velocities
+ Starting step           0
+ Starting step           1
+ Starting step           2
+ Starting step           3
+ Starting step           4
+ Starting step           5
+ Starting step           6
+ Starting step           7
+ Starting step           8
+ Starting step           9
+ Starting step          10
+ Starting step          11
+ Starting step          12
+ Starting step          13
+ Starting step          14
+ Starting step          15
+ Starting step          16
+ Starting step          17
+ Starting step          18
+ Starting step          19
+ Starting step          20
+ Un-centering velocities
+Time=0
+Time=0.5
+Time=1
+tsf run1/galaxy.snap
+char Headline[35] "init_xrandom: seed used 1317643040"
+char History[46] "rungalaxy in=run1.in outdir=run1 VERSION=2.1d"
+char History[34] "mkplummer run1.in 100 VERSION=2.9"
+set SnapShot
+  set Parameters
+    int Nobj 100 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double PhaseSpace[100][2][3] 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.420217 -0.0381274 0.0636858 0.170927 0.187184 -0.157721 -0.119155 0.111483 -0.781010 0.278124 -0.181703 0.561083 0.464284 -0.501816 0.421066 -0.0196195 0.0841942 0.113481 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.474153 -0.179730 -0.180134 -0.247119 0.147234 -0.624641 -0.0771250 -0.189470 -0.430702 0.0226507 0.273699 0.269670 -0.480009 -0.341959 0.153311 0.745585 0.117009 -0.474415 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.176191 -0.288351 -0.244013 -0.313477 -0.495223 0.479783 0.310047 0.261310 0.0615054 -0.458067 -0.376943 -0.680496 0.0740942 0.0160756 0.469677 0.350105 -0.0107421 0.359822 -0.695165 0.0967298 0.122633 -0.565000 0.334130 -0.627636 0.325585 -0.00156436 0.178546 0.458156 -0.402745 -0.871795 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.0536448 -0.272402 0.00312146 0.250004 -1.07714 -0.120970 0.0156039 0.531790 -0.0200109 0.144245 0.804590 -0.0838063 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.149082 0.244575 0.133681 -0.156781 0.286401 0.563610 0.0122559 -0.0957220 -0.302177 0.666121 0.409239 -0.427232 0.732117 0.0490057 -0.243433 0.558704 -0.178395 -0.323129 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.218592 -0.149354 0.0122769 -0.126541 0.497351 0.143428 0.686248 -0.709944 -0.628149 -0.969332 0.254999 -0.190623 -0.147915 -0.0948013 -0.149601 1.10421 0.0387981 -0.166704 0.494831 -0.0355965 -0.243747 -0.617981 0.150238 0.852568 -0.0560580 -0.199681 0.0363158 0.750363 0.165270 0.840276 -0.929630 0.883502 0.00638444 0.224990 -0.197852 0.313219 -0.677302 -0.325316 0.163488 -0.230428 -0.0438687 0.670842 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.719844 -0.0738399 0.276862 -0.469180 0.192312 -0.348786 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.184221 -0.494855 -0.678506 -0.280712 0.0663135 -0.294710 0.180951 -0.161290 0.396685 -0.283411 -0.356733 0.0412226 -0.0977150 -0.0317777 -0.218542 0.416777 -0.341664 -0.0492295 -0.106267 -0.326120 -0.823241 0.144882 0.274563 -0.504319 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.197637 0.173695 -0.310386 -0.0529347 -0.200098 0.830570 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.0904913 -0.203291 -0.373169 -0.383823 0.752196 -0.101797 -0.365436 -0.228313 0.199268 0.403367 -0.875740 0.247476 0.0456338 0.163945 -0.232832 -0.0768846 0.761604 0.661223 -0.345772 0.592536 0.551101 0.137994 -0.639552 0.160157 0.775203 -0.596505 0.00581314 0.453696 0.695112 0.0969183 -0.224874 -0.567435 -0.453225 0.862146 0.153818 0.329541 0.216330 0.177589 0.0235284 -0.364967 0.433369 -0.190993 -0.467375 -0.133595 -0.193355 0.0695769 0.0124603 -0.358456 0.0423100 -0.0688021 0.271112 -0.101970 -0.229028 0.00918473 -0.408504 0.704400 -0.0117773 -0.194454 0.408252 -0.361794 -0.717399 0.195824 0.173635 -0.290462 -0.0282095 0.145328 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.434151 0.238606 0.949421 0.276150 0.170779 0.606452 0.789101 0.242340 -0.717651 0.315538 -0.125864 0.356622 -0.751160 -0.300990 -0.624729 0.0984677 -0.214671 0.318562 -0.0878330 0.185106 -0.829248 0.430277 -0.115640 -0.456440 -0.365934 0.616232 0.253366 0.495722 -0.0394387 -0.103364 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.538337 0.244260 -0.294183 -0.000285409 -0.355540 0.698026 -0.0139037 0.0834553 0.340809 0.258661 0.972243 -0.262473 0.0936384 -0.549400 -0.132054 0.161506 -0.0833653 -0.591371 0.317802 -0.463113 -0.323652 -0.188008 -0.977726 0.123328 0.109141 -0.517005 -0.489899 -0.908024 0.114706 -0.216419 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.332934 0.543924 -0.764785 0.614396 0.481720 0.412823 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.102980 -0.971729 -0.203906 -0.367039 -0.285849 0.459601 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.380088 -0.859415 -0.193842 0.0667357 -0.270810 0.0631757 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.216165 0.101463 -0.379031 0.879312 -0.290152 0.813638 -0.381780 -0.929807 -0.695930 0.0117495 0.413848 -0.376848 -0.239442 -0.406923 0.319207 -0.00475368 -0.121454 0.317617 -0.511384 -0.831770 -0.0111632 -0.769570 -0.0420077 0.231124 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.302075 0.0759047 -0.577435 -0.832710 0.640427 -0.570294 0.510219 -0.382121 0.874622 -0.0382899 0.196693 -0.458944 -0.362843 0.216562 -0.596768 -0.830225 -0.182778 -0.565097 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.179009 0.0157730 -0.0932640 -0.103002 0.916664 0.0175492 -0.374255 -0.681541 0.410614 0.352006 0.460399 0.176842 0.980000 -0.0404577 -0.949896 0.395857 -0.217705 -0.395363 -0.0883928 -0.284794 -0.785450 0.110012 -0.373616 -0.530227 0.332563 -0.333890 -0.0838747 -0.0504686 -0.00564983 -0.332647 -0.161219 0.300425 0.525191 -0.180598 -0.500465 -0.527111 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.259277 -0.234857 -0.733229 -0.472362 -0.769620 -0.178667 0.336576 -0.113740 -0.315744 -0.431143 0.127514 -0.0280602 0.285566 0.184228 -0.332309 -0.111437 0.180470 -0.367359 0.587046 0.0475017 -0.176559 -0.494622 -0.441209 0.0379295 0.729639 -0.684824 0.0774256 -0.0599848 0.432549 -0.122292 0.0305572 0.408609 0.0561961 -0.960737 0.339689 -0.413810 
+    double Potential[100] 0.00000 0.00000 0.00000 0.00000 -1.25290 -1.09484 -0.898585 0.00000 -1.25986 -1.36408 -1.13829 0.00000 0.00000 -1.38844 -1.22407 -1.13030 -1.03265 -1.25986 0.00000 -1.43897 -1.07627 0.00000 -1.21164 -1.49262 -1.03246 0.00000 0.00000 -1.38920 -0.783936 -1.48118 -1.25431 -1.46879 -0.656647 -0.998472 0.00000 0.00000 -0.970859 0.00000 -1.04039 -1.13869 -1.49244 -1.10258 0.00000 -1.37019 0.00000 -1.42400 -1.21040 -1.37009 -0.827734 -0.910291 -1.05901 -1.34163 -1.27727 -1.30074 -0.869323 -0.984605 0.00000 -0.707420 -0.797390 -0.830349 -1.02915 -0.905422 0.00000 -1.09339 -1.22467 -1.18412 -1.19035 -1.15205 0.00000 -0.820146 0.00000 0.00000 0.00000 -0.874379 0.00000 -0.913997 0.00000 -1.27170 -0.762918 -1.09011 -0.841322 0.00000 0.00000 -1.16451 -0.713556 -1.05990 0.00000 -1.43435 -0.869021 -0.681826 -1.14536 -1.26334 -0.968019 0.00000 -1.10070 -1.33100 -1.31565 -1.18731 -0.892378 -1.17494 
+  tes
+tes
+set SnapShot
+  set Parameters
+    int Nobj 100 
+    double Time 0.500000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double PhaseSpace[100][2][3] 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.364011 0.0311567 -0.105786 -0.392667 0.0200287 -0.470884 0.0390090 -0.00882552 -0.412426 0.377636 -0.297723 1.01754 0.413149 -0.414952 0.424462 -0.191038 0.278635 -0.0964443 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.480863 -0.0830616 -0.453225 0.210503 0.179208 -0.441223 0.0509711 0.00760859 -0.191990 0.503043 0.447525 0.563527 -0.0213216 -0.227337 -0.0915240 1.09126 0.341589 -0.524863 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00513288 -0.462845 -0.0124681 -0.322851 -0.194086 0.405705 -0.00287623 -0.0380594 -0.315187 -0.612717 -0.767255 -0.698788 0.221908 -0.0125718 0.526575 0.245607 -0.112935 -0.119362 -0.906951 0.245499 -0.161225 -0.290614 0.244627 -0.523091 0.452685 -0.151407 -0.335989 -0.0667833 -0.166495 -1.00415 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.0935154 -0.692196 -0.101669 0.331328 -0.604016 -0.287061 0.0717598 0.817751 -0.0586639 0.0816613 0.377380 -0.0735081 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.174781 0.324828 0.367735 0.0318382 0.0390587 0.344383 0.282664 0.0651832 -0.390661 0.357769 0.229366 0.130954 0.904710 -0.0478226 -0.384328 0.179095 -0.194356 -0.248045 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.192866 0.0869333 0.0425608 0.233962 0.429630 0.0138346 0.152985 -0.536614 -0.677282 -1.16415 0.462476 0.0174254 0.398117 -0.0439873 -0.263423 0.904095 0.107509 -0.170408 0.117009 0.0385986 0.156455 -0.858825 0.0842363 0.590520 0.285899 -0.0863572 0.388670 0.560215 0.259276 0.547172 -0.781454 0.749128 0.157890 0.371104 -0.343258 0.281187 -0.717426 -0.312882 0.462575 0.0346010 0.0737191 0.519730 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.878223 0.0418246 0.0641506 -0.164547 0.287575 -0.451027 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00467483 -0.409324 -0.745422 -0.399772 0.256923 -0.00378675 0.00446771 -0.279126 0.301544 -0.374950 -0.100987 -0.424128 0.185541 -0.160959 -0.241513 0.655767 -0.0596408 0.0122551 -0.0258951 -0.196753 -0.962208 0.173420 0.197988 -0.0919085 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.139195 0.0122786 0.127163 -0.145892 -0.440487 0.769330 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.0847026 0.165867 -0.295436 -0.160739 0.566741 0.366088 -0.121282 -0.624776 0.277206 0.554497 -0.624887 0.120568 0.0728320 0.398521 0.104672 0.130661 0.224097 0.609377 -0.249416 0.227007 0.562805 0.257652 -0.802710 -0.139584 0.911918 -0.244508 0.0515007 0.100532 0.722889 0.0607917 0.254635 -0.404087 -0.258972 0.972597 0.506381 0.449830 0.0313151 0.275886 -0.148823 -0.342026 -0.00966874 -0.387770 -0.368322 -0.133940 -0.364182 0.296289 0.0238415 -0.345803 0.0179871 -0.180762 0.191694 0.0327564 -0.207496 -0.302718 -0.473166 0.843145 -0.182039 -0.0691253 0.152027 -0.319802 -0.802800 0.122288 0.192953 -0.0765376 -0.234106 -0.0660469 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.893954 0.155646 -0.499949 0.0976001 -0.227812 0.513516 -0.632688 -0.384780 -0.432213 0.382989 -0.105430 0.435665 0.116230 0.0757048 -0.957308 0.387273 -0.293411 -0.0919951 -0.0862434 0.518310 0.165750 0.636697 -0.382469 -0.261825 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.407296 -0.0339589 0.0666835 -0.592469 -0.713159 0.635077 0.0970509 0.500164 0.121067 0.141669 0.640922 -0.620174 0.163088 -0.477043 -0.420982 0.0961977 0.364524 -0.473104 0.162109 -0.855736 -0.230974 -0.368848 -0.584202 0.229114 -0.328180 -0.390847 -0.537022 -0.796818 0.359157 0.00257372 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.615210 0.734243 -0.520574 0.507923 0.286067 0.546946 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.375977 -0.914885 -0.165168 -0.0940011 0.0539210 0.0465242 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.315887 -0.114535 0.0344057 1.12152 -0.425125 0.704307 -0.349344 -0.667761 -0.848683 0.111510 0.656800 -0.211997 -0.223252 -0.425936 0.387940 0.132110 0.0172330 -0.00572450 -0.855624 -0.800073 0.0973662 -0.610256 0.147713 0.200472 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.685928 0.360341 -0.816082 -0.709076 0.454910 -0.396228 0.461017 -0.271551 0.585627 -0.179245 0.244693 -0.723373 -0.693806 0.0827185 -0.818961 -0.538037 -0.267221 -0.338940 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.0964232 0.406797 -0.0931978 -0.271886 0.515092 0.0479984 -0.164663 -0.373446 0.421120 0.482763 0.745997 -0.190438 0.980000 -0.0404577 -0.949896 0.395857 -0.217705 -0.395363 -0.0394408 -0.423727 -0.970441 0.108120 -0.167960 -0.192475 0.211875 -0.250659 -0.263916 -0.409239 0.385045 -0.307265 -0.212307 0.0269642 0.167765 0.0226454 -0.564786 -0.900693 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.423948 -0.593729 -0.763419 -0.210935 -0.667015 0.0374140 0.0278448 -0.0167456 -0.235945 -0.700602 0.228971 0.328132 0.157831 0.162626 -0.402567 -0.361034 -0.309958 0.0851067 0.189508 -0.158584 -0.129329 -1.03030 -0.312984 0.100915 0.660163 -0.398533 -0.0131632 -0.252999 0.690276 -0.216321 -0.413171 0.495542 -0.157543 -0.784199 0.0332438 -0.403556 
+    double Potential[100] 0.00000 0.00000 0.00000 0.00000 -1.33327 -1.39900 -0.955069 0.00000 -1.05547 -1.56873 -1.37683 0.00000 0.00000 -1.20967 -1.51923 -1.02376 -0.799419 -1.22866 0.00000 -1.04266 -0.846419 0.00000 -1.02262 -1.30310 -0.835168 0.00000 0.00000 -1.27714 -1.00162 -1.34088 -1.39408 -1.12622 -0.702335 -0.785788 0.00000 0.00000 -0.861684 0.00000 -1.04137 -1.21497 -1.53658 -0.914194 0.00000 -1.43453 0.00000 -1.29604 -0.979830 -1.21727 -0.903251 -0.824013 -1.27356 -1.29974 -1.14903 -1.32354 -0.767536 -0.872673 0.00000 0.00000 -0.790608 -0.903549 -0.859016 -1.04972 0.00000 -1.28191 -1.11846 -1.15645 -0.928841 -1.04859 0.00000 -0.719483 0.00000 0.00000 0.00000 0.00000 0.00000 -0.840683 0.00000 -1.37473 -0.859062 -1.06375 -0.693639 0.00000 0.00000 -0.744364 -0.897054 -0.787988 0.00000 -1.19459 -1.08243 -0.681826 -0.887389 -1.46016 -1.22346 0.00000 -0.892437 -1.57990 -1.28071 -1.52225 -0.972242 -0.944567 
+  tes
+tes
+set SnapShot
+  set Parameters
+    int Nobj 100 
+    double Time 1.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double PhaseSpace[100][2][3] 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.0653425 -0.0433565 -0.342838 -0.774452 -0.252948 -0.380156 0.232726 -0.168911 0.164301 0.349978 -0.283140 1.15527 0.270654 -0.178348 0.306636 -0.396065 0.678854 -0.431694 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.284726 -0.0365074 -0.607256 0.554346 -0.0264366 -0.161819 0.268097 0.140674 0.0346661 0.330234 0.130850 0.365552 0.523589 0.0125131 -0.356669 0.957663 0.515356 -0.400515 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.122715 -0.450145 0.176123 -0.172944 0.274333 0.350044 -0.247051 -0.377027 -0.582855 -0.439613 -0.531443 -0.478641 0.341452 -0.110159 0.345248 0.159362 -0.282144 -0.597274 -0.993365 0.344134 -0.406518 -0.0549817 0.155579 -0.455200 0.323495 -0.204270 -0.739292 -0.406859 -0.0655836 -0.641504 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.263523 -0.937122 -0.245588 0.352502 -0.352419 -0.235025 0.103652 0.919702 -0.0925621 0.0483262 0.0342136 -0.0703027 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.124808 0.282270 0.466142 0.162780 -0.202539 0.0407237 0.367962 0.0859329 -0.230817 0.0325426 -0.168726 0.456065 0.919072 -0.122114 -0.477828 -0.122816 -0.102502 -0.0964436 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.00106259 0.233984 0.00996630 0.476069 0.174696 -0.175651 -0.421669 -0.221833 -0.628157 -1.00630 0.746467 0.195980 0.722857 -0.0214336 -0.312990 0.454164 0.00742188 -0.00897049 -0.268122 0.0131352 0.367599 -0.628313 -0.149285 0.291122 0.481436 0.0133660 0.574085 0.239399 0.127347 0.172513 -0.558587 0.537768 0.275693 0.521624 -0.503452 0.181250 -0.655826 -0.259874 0.681344 0.204532 0.135061 0.354390 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.890811 0.188838 -0.155553 0.0996454 0.283591 -0.444310 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.194033 -0.271058 -0.662454 -0.439840 0.321416 0.361683 -0.132837 -0.256236 0.0236291 -0.112402 0.170318 -0.638024 0.415033 -0.133360 -0.194067 0.326059 0.236532 0.162253 0.0654191 -0.112154 -0.924469 0.195791 0.144131 0.244695 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.0285867 -0.227378 0.420321 -0.265911 -0.479016 0.339985 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.0754268 0.348092 -0.0612278 0.145579 0.153260 0.515371 0.165577 -0.851098 0.293603 0.571893 -0.302195 -0.0459253 0.0999021 0.454857 0.320348 0.00747261 -0.0392314 0.272825 -0.0734270 -0.188411 0.388477 0.480692 -0.855629 -0.589721 0.879879 0.115411 0.0590973 -0.227729 0.690554 -0.0399270 0.644455 -0.0453541 -0.0279586 0.560553 0.841723 0.424970 -0.130702 0.166494 -0.299295 -0.258633 -0.405595 -0.163492 -0.165519 -0.120518 -0.518624 0.487534 -0.00683979 -0.245976 0.0400604 -0.241264 0.0132000 0.0233382 -0.0116363 -0.363306 -0.483449 0.861042 -0.330683 0.0246635 -0.0718322 -0.273889 -0.794949 -0.00324899 0.111408 0.122792 -0.248044 -0.237083 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.874915 -0.00264050 -0.219242 -0.212969 -0.386648 0.582645 -0.362101 -0.387414 -0.217888 0.698553 0.125210 0.418203 0.280761 -0.103567 -0.930631 0.244732 -0.412380 0.208262 0.260187 0.240501 -0.0108716 0.631911 -0.746315 -0.411419 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.0358023 -0.377663 0.325622 -0.833160 -0.516378 0.414324 0.114206 0.690365 -0.201551 -0.0434378 0.183216 -0.617412 0.182724 -0.213844 -0.595338 -0.0216527 0.653548 -0.234539 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.662572 -0.175057 -0.492262 -0.502155 0.475522 0.153806 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.838143 0.836498 -0.231409 0.383701 0.128214 0.598843 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.267251 -0.815987 -0.146287 -0.330527 0.307848 0.00810017 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.768855 -0.291330 0.340888 0.721359 -0.295055 0.526519 -0.269209 -0.296251 -0.876878 0.240005 0.817512 0.119088 -0.0795433 -0.335432 0.306612 0.436186 0.344088 -0.337023 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 0.287373 -0.134751 0.142330 -0.548679 0.293320 -0.957975 -0.920782 -0.0534877 -0.947962 -0.373718 -0.275444 -0.184374 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.0422339 0.567612 -0.0358702 -0.235351 0.143963 0.125593 0.113896 0.00844325 0.210760 0.625887 0.712111 -0.593132 0.980000 -0.0404577 -0.949896 0.395857 -0.217705 -0.395363 0.00687229 -0.464677 -0.977854 0.0666768 0.0122380 0.141402 0.00296321 0.0275627 -0.304225 -0.395049 0.593183 0.103326 -0.0920997 -0.234165 -0.319379 0.392309 -0.433804 -0.955115 0.00000 0.00000 0.00000 0.00000 0.00000 0.00000 -0.477233 -0.872326 -0.724531 -0.0390362 -0.448853 0.126898 -0.219598 0.0646142 -0.0648393 -0.300563 0.0900881 0.329923 -0.0195259 -0.0893503 -0.243686 -0.288546 -0.584130 0.442716 -0.289071 -0.230832 -0.117777 -0.799912 0.00576896 -0.00399508 0.430027 -0.0149270 -0.142024 -0.657327 0.782163 -0.321092 -0.759853 0.466021 -0.345858 -0.616982 -0.144331 -0.350308 
+    double Potential[100] 0.00000 0.00000 0.00000 0.00000 -1.34461 -1.33884 -1.24862 0.00000 -1.09308 -1.27597 -1.10234 0.00000 0.00000 -1.10169 -1.07955 -1.16759 -0.732354 -0.982285 0.00000 -0.807367 -0.760542 0.00000 -0.935356 -1.21716 -0.806883 0.00000 0.00000 -1.23182 -1.02352 -1.00736 -1.01997 -0.862957 -0.777120 -0.698654 0.00000 0.00000 -0.796290 0.00000 -1.13074 -1.25560 -1.22398 -0.926920 0.00000 -1.16555 0.00000 -1.15320 -0.775944 -0.937803 -1.18185 -0.853299 -1.05323 -1.18887 -1.20549 -1.28395 -0.716129 -0.820441 0.00000 0.00000 -0.919060 -1.05315 -0.885950 -1.21717 0.00000 -1.16461 -0.894780 -1.09293 0.00000 -0.895175 0.00000 -0.636131 0.00000 0.00000 0.00000 0.00000 0.00000 -0.873656 0.00000 -0.811790 -0.927773 -1.20077 0.00000 0.00000 0.00000 0.00000 -1.33512 -0.659402 0.00000 -0.977183 -1.25991 -0.681826 -0.827834 -1.35597 -1.25333 0.00000 -0.696077 -1.20805 -1.36851 -1.17470 -1.26140 -0.792912 
+  tes
+tes
+==========================================================
+Cleaning src/nbody/image
+Creating snap.in
+mkplummer snap.in 10 seed=123
+Running snapccd
+snapccd snap.in . ; nemo.coverage snapccd.c
+Running snapgrid
+snapgrid snap.in .  ; nemo.coverage snapgrid.c
+Running snapslit
+snapslit snap.in  width=1 length=4 zvar=vy ; nemo.coverage snapsplit.c
+### nemo Debug Info: Convolving with 3-length beam: 0.250000 0.500000 0.250000 
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+### nemo Debug Info: mmax=0.750000 vmin=-0.463708 vmax=0.649302 smax=0.051491  reset to:
+### nemo Debug Info: mmax=0.750000 vmin=-0.463708 vmax=0.649302 smax=0.051491           
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+==========================================================
+Cleaning src/nbody/init
+Creating snapenter.in
+snapenter < snapenter.in verbose=f headline="test suite"  ; nemo.coverage snapenter.c
+### Warning [snapenter]: Center of mass not necessarily at the origin
+Snapshot with 2 particle(s) written to file snapenter.out
+Running tsf
+tsf snapenter.out
+char History[53] "snapenter verbose=f headline=test suite VERSION=2.2c"
+char Headline[11] "test suite"
+set SnapShot
+  set Parameters
+    int Nobj 2 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[2] 1.00000 0.500000 
+    double PhaseSpace[2][2][3] -1.00000 0.00000 0.00000 0.00000 -0.125000 0.00000 2.00000 0.00000 0.00000 0.00000 0.250000 0.00000 
+  tes
+tes
+Running snapprint
+snapprint snapenter.out m,x,y,z,vx,vy,vz
+### nemo Debug Info: m x y z vx vy vz 
+1 -1 0 0 0 -0.125 0 
+0.5 2 0 0 0 0.25 0 
+Comparing snapenter.out snapenter.cmp
+tsf snapenter.out octal=t |  rsf - snapenter.cmp ; cmp snapenter.cmp snapenter.out
+Running mkplummer
+mkplummer mkplummer.out 10 seed=123 ; nemo.coverage mkplummer.c
+tsf mkplummer.out
+char Headline[28] "init_xrandom: seed used 123"
+char History[48] "mkplummer mkplummer.out 10 seed=123 VERSION=2.9"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] -0.609486 -0.221687 -0.450963 -0.0766784 -0.209397 0.396561 4.80925 -0.486182 -1.52575 0.418474 0.117766 0.230193 0.545314 0.0795464 0.0632245 0.0867019 -0.109128 -0.282036 0.377209 -0.213318 -0.0118330 -0.739982 0.649302 -0.0595349 -0.0724005 0.706104 0.0899005 0.158021 0.0702185 0.316083 -0.561212 -0.324160 1.18761 0.379356 0.257397 0.0247723 -0.312291 -0.902718 -0.451821 0.669557 -0.463708 -0.117066 0.369670 0.154617 0.681866 -0.0283658 -0.0937881 -0.135925 0.106249 0.255479 -0.0102538 -0.757828 0.0154417 -0.328447 -4.65230 0.952320 0.428016 -0.109256 -0.234103 -0.0446015 
+  tes
+tes
+mkplummer - 10 seed=123 |\
+		massname="n(m)" masspars=p,-2 massrange=0.5,10 |\
+		tsf - ;  nemo.coverage mkplummer.c
+Running mkexpdisk
+mkexpdisk mkexpdisk.out 10 seed=123 ; nemo.coverage mkexpdisk.c
+tsf mkexpdisk.out
+char History[48] "mkexpdisk mkexpdisk.out 10 seed=123 VERSION=1.3"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.0959572 0.0959572 0.0959572 0.0959572 0.0959572 0.0959572 0.0959572 0.0959572 0.0959572 0.0959572 
+    double PhaseSpace[10][2][3] 0.226717 -0.0961831 0.0305849 -0.144963 -0.198199 0.186594 0.314932 0.221612 -0.0707257 0.795526 -1.19916 -0.0549409 0.415623 -0.195386 0.00123767 -0.630583 -0.818710 -0.151559 -0.0131403 -0.149846 0.00214669 -0.212650 0.271310 -0.338497 0.115794 -0.347040 -0.000940869 -0.444864 0.299591 -0.0587773 0.0935302 0.477030 -0.00648498 0.857764 0.177968 0.164488 -0.260683 0.257766 -0.0149315 0.564197 0.791843 0.0659153 0.417357 -0.655657 0.0309819 -1.00536 -0.355052 -0.0467960 -0.557136 -0.258832 -0.00859852 -0.433162 0.539385 0.152254 -0.752994 0.746537 0.0367304 0.654098 0.491022 0.0813191 
+  tes
+tes
+f2d conversion:
+mkplummer - 100 |  csf - - convert=f2d |  snapplot - 
+### nemo Debug Info: On top-level: 3 items  read, 3 items written
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+d2f conversion:
+mkplummer - 100 |  csf - - convert=d2f |  snapplot - 
+### nemo Debug Info: On top-level: 3 items  read, 3 items written
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+Running mkommod
+mkommod /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/data/k5isot.dat mkommod.out 10 seed=123
+[filestruct: reading swapped]### nemo Debug Info: [readmode: ntab = 101]
+### nemo Debug Info: [snapcenter in mkommod: mtot = 1.000000    cmpos = 0.119439    cmvel = 0.374876]
+tsf mkommod.out
+char Headline[28] "init_xrandom: seed used 123"
+char History[117] "mkommod /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/data/k5isot.dat mkommod.out 10 seed=123 VERSION=2.0b"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] -0.0967033 0.0308456 -0.447914 0.124406 -0.0151460 -0.276300 -0.315569 0.269728 -0.145966 0.326449 0.0740617 -0.0131571 0.109220 0.184126 -0.00655944 -0.219018 0.943421 -0.167194 0.166848 -0.573843 -0.408359 0.220794 -0.468614 -0.691960 -0.154943 0.190321 0.0518146 -0.201807 0.425090 1.60994 -0.216901 0.220245 0.0976379 -0.568322 -0.104589 -1.18567 -0.140074 0.0793656 0.217509 0.176703 -0.774805 -0.233862 -0.0943755 -0.0722982 -0.149100 -0.403080 -0.250697 0.630767 0.650766 -0.654223 0.926986 -0.00112060 -0.524221 0.109637 0.0917323 0.325734 -0.136050 0.544995 0.695498 0.217794 
+  tes
+tes
+Running mkhomsph
+mkhomsph mkhomsph.out 10 seed=123
+tsf mkhomsph.out
+char History[47] "mkhomsph mkhomsph.out 10 seed=123 VERSION=1.4b"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] -0.733000 -0.0765797 -0.392732 0.00000 0.00000 0.00000 1.04002 -0.0693405 -0.0519105 0.00000 0.00000 0.00000 0.734306 0.320889 0.182867 0.00000 0.00000 0.00000 -0.867497 0.0310160 -0.552972 0.00000 0.00000 0.00000 -0.902896 -0.327165 0.111187 0.00000 0.00000 0.00000 0.413261 -0.0724819 -0.504782 0.00000 0.00000 0.00000 -1.10775 -0.196410 0.747985 0.00000 0.00000 0.00000 0.128649 0.540787 0.520600 0.00000 0.00000 0.00000 0.836324 -0.482947 0.0944777 0.00000 0.00000 0.00000 0.458581 0.332231 -0.154722 0.00000 0.00000 0.00000 
+  tes
+tes
+Running mkspiral
+mkspiral mkspiral.out 10 seed=123 a=100
+### nemo Debug Info: fraction of particles in disk = 0.320877 (0)
+tsf mkspiral.out
+char History[52] "mkspiral mkspiral.out 10 seed=123 a=100 VERSION=1.9"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] -0.737049 -0.0966557 0.00000 0.0694922 -0.529914 0.00000 -0.105873 0.286032 0.00000 -0.267573 -0.0990404 0.00000 -0.508706 -0.275789 0.00000 0.222077 -0.409633 0.00000 0.0459112 -0.275696 0.00000 0.260574 0.0433930 0.00000 0.0253166 -0.239661 0.00000 0.229725 0.0242670 0.00000 -0.921510 0.258755 0.00000 -0.158880 -0.565823 0.00000 0.373454 0.0101102 0.00000 -0.00916649 0.338596 0.00000 0.491200 -0.0741710 0.00000 0.0628626 0.416309 0.00000 0.223090 -0.272568 0.00000 0.249679 0.204356 0.00000 0.478408 0.380861 0.00000 -0.300119 0.376986 0.00000 
+  tes
+tes
+Disabled magalie because it hangs every now and then
+==========================================================
+Cleaning src/nbody/io_nemo
+(cd /home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/src/nbody/io_nemo ; make test  ; script/test_io_nemo.csh)
+make[1]: Entering directory `/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/src/nbody/io_nemo'
+make[1]: Leaving directory `/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/src/nbody/io_nemo'
+hackforce []
+snapmask []
+snapprint []
+mkplummer []
+
+*** Running [compile/bin/io_nemo_test_float] with [compile/bin/snapmask_s] ***
+Testing with seltp = [0:100:2,1000:4000:3,10000,15000:25000]
+
+*** Running [compile/bin/io_nemo_test_double] with [compile/bin/snapmask_d] ***
+Testing with seltp = [0:100:2,1000:4000:3,10000,15000:25000]
+*ERROR* /tmp/.io_nemo_run_test/plum.30k.mask and /tmp/.io_nemo_run_test/plum.30k.res differ....
+make: *** [testc] Error 1
+==========================================================
+Cleaning src/nbody/io/starlab
+make: Nothing to be done for `all'.
+==========================================================
+Cleaning src/nbody/io
+Running stoa
+mkplummer - 10 | stoa - stoa.out ; nemo.coverage stoa.a
+### nemo Debug Info: [stoa: writing 10 bodies at time 0.000000]
+Running atos
+atos stoa.out atos.out ; nemo.coverage atos.c
+### nemo Debug Info: [atos: reading 10 bodies at time 0.000000]
+stoa atos.out stoa.cmp ; nemo.coverage stoa.c
+### nemo Debug Info: [stoa: writing 10 bodies at time 0.000000]
+Running diff stoa.out stoa.cmp
+diff stoa.out stoa.cmp
+Running tabtos
+mkplummer - 10 |  snapprint - m,x,y,z,vx,vy,vz > tabtos.in
+### nemo Debug Info: m x y z vx vy vz 
+tabtos tabtos.in tabtos.out "" mass,pos,vel times=0  ; nemo.coverage tabtos.c
+### nemo Debug Info: Assuming nbody=10
+### nemo Debug Info: [reading 10 bodies at time 0.000000]
+snapprint tabtos.out m,x,y,z,vx,vy,vz > tabtos.cmp
+### nemo Debug Info: m x y z vx vy vz 
+Running diff tabtos.in tabtos.cmp
+diff tabtos.in tabtos.cmp
+mkplummer mp.out 10
+Running snaptipsy:
+snaptipsy mp.out st.out mode=dark ; nemo.coverage snaptipsy.c
+Running tipsysnap
+tipsysnap st.out ts.out mode=binary options=dark ; nemo.coverage tipsysnap.c
+### Warning [tipsysnap]: TIPSY header = 32 bytes, not 28. You may need offset=
+### nemo Debug Info: ndim=3
+### nemo Debug Info: time=0 N=10 (0,10,0) for gas,dark,star
+Running snapcmp
+snapcmp ts.out mp.out
+# time  Min  Qlow Median Qhigh  Max   Mean Sigma
+2.11099e-317   4.14844e-09 1.48052e-08 1.9224e-08 3.5507e-08 1.09968e-07  3.71802e-08 3.40506e-08
+Running snapgadget
+snapgadget mp.out sg.out N=10,0,0,0; nemo.coverage snapgadget.c
+Running gadgetsnap
+gadgetsnap sg.out gs.out ; nemo.coverage gadgetsnap.c
+### nemo Debug Info: reading `sg.out' ...
+### nemo Debug Info: Header: 
+npart:  10 0 0 0 0 0
+mass:  -2.35344e-185 5.28219e-315 0 0 0 0
+time: 0
+redshift: 0
+flag_sfr: 0
+flag_feedback: 0
+npartTotal:  10 0 0 0 0 0
+flag_cooling: 0
+num_files: 0
+BoxSize: 4.66726e-62
+Omega0: 1.9036e+185
+OmegaLambda: 5.2967e-315
+HubbleParam: 2.69256e-303
+==========================================================
+Cleaning src/nbody/reduc
+Creating snap.in
+mkplummer snap.in 10 seed=123
+Creating hack.out
+hackcode1 snap.in hack.out fcells=4 tstop=2 freqout=1 > /dev/null
+Running snapplot
+snapplot hack.out nxy=2,2 nxticks=3 nyticks=3 ; nemo.coverage  snapplot.c
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+Running snapplot3
+snapplot3 hack.out ; nemo.coverage  snapplot3.c
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+ %PGPLOT, PGSCI: no graphics device has been selected
+Running snapdiagplot
+snapdiagplot hack.out  ; nemo.coverage snapdiagplot.c
+65 diagnostic frames read
+Worst fractional energy loss dE/E = (E_t-E_0)/E_0 = -0.0705389 at T = 1.5
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+Running snapplotv
+snapplotv hack.out nxy=2,2 nxticks=3 nyticks=3 ; nemo.coverage snapplotv.c
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+Creating hack2.out
+hackcode1 snap.in hack2.out fcells=4 tstop=10 freqout=8 > /dev/null
+Running snapmradii
+snapmradii hack2.out | tabplot - 1 2:9 line=1,1 ; nemo.coverage snapmradii.c
+### nemo Debug Info: read 81 points
+### nemo Debug Info: min and max value in xcolumns 1: [0.000000 : 10.000000]
+### nemo Debug Info: min and max value in ycolumns 2:9: [0.089977 : 3.660350]
+### nemo Debug Info: X:min and max value reset to : [-0.500000 : 10.500000]
+### nemo Debug Info: Y:min and max value reset to : [-0.088542 : 3.838869]
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+Running radprof
+radprof snap.in tab=t > /dev/null ; nemo.coverage radprof.c
+Checking d2f for snapfour
+mkplummer - 100 seed=123 |  csf - - convert=d2f |  snapfour - radii=0:2
+### nemo Debug Info: On top-level: 3 items  read, 3 items written
+### nemo Debug Info: <R> N A0 A1 A2 A3 A4 B1 B2 B3 B4 
+0.5 76 0.02257 0.0430464 0.106832 0.0378323 -0.0870279 0.0106452 -0.151254 -0.00847635 -0.176513
+1.5 16 -0.233933 -0.402085 -0.176371 0.291476 0.547148 -0.873766 -0.724156 0.123881 0.27142
+Checking f2d for snapfour
+mkplummer - 100 seed=123 |  csf - - convert=f2d |  snapfour - radii=0:2
+### nemo Debug Info: On top-level: 3 items  read, 3 items written
+### nemo Debug Info: <R> N A0 A1 A2 A3 A4 B1 B2 B3 B4 
+0.5 76 0.02257 0.0430464 0.106832 0.0378323 -0.0870279 0.0106452 -0.151254 -0.00847635 -0.176513
+1.5 16 -0.233933 -0.402085 -0.176371 0.291477 0.547148 -0.873766 -0.724156 0.123881 0.27142
+Creating cube.in
+snaprotate snap.in - 30,45,20 zyz |  snapgrid - cube.in nx=32 ny=32 nz=32 zrange=-2:2
+### nemo Debug Info: Warning: new option: select=pos,vel,acc  => mask=24592
+Running snapfit
+snapfit hack.out cube.in theta1=-30:30:10 theta2=-30:30:10
+### nemo Debug Info: 32768/32768 data (100%) from the cube used in fit
+### nemo Debug Info: Snapshot: time=0 Using 10/10 bodies
+### nemo Debug Info: Snapshot: time=1 Using 10/10 bodies
+### nemo Debug Info: Snapshot: time=2 Using 10/10 bodies
+2\1    -30.0 -20.0 -10.0   0.0  10.0  20.0  30.0
+
+-30.0 :  0.59  0.59  0.60  0.51  0.50  0.49  0.48
+-20.0 :  0.60  0.60  0.61  0.55  0.53  0.52  0.51
+-10.0 :  0.60  0.61  0.61  0.57  0.56  0.55  0.54
+  0.0 :  0.61  0.61  0.62  0.60  0.59  0.58  0.56
+ 10.0 :  0.61  0.61  0.62  0.62  0.61  0.60  0.59
+ 20.0 :  0.62  0.62  0.62  0.63  0.63  0.62  0.61
+ 30.0 :  0.62  0.62  0.63  0.65  0.64  0.63  0.63
+
+        -30.0 -20.0 -10.0   0.0  10.0  20.0  30.0
+Min: theta1= 30 theta2= -30 log10(sum)= 0.475478 time= 0 scale= 5.33122 3.11247 1.74664 0.246234
+2\1    -30.0 -20.0 -10.0   0.0  10.0  20.0  30.0
+
+-30.0 :  0.58  0.59  0.59  0.60  0.61  0.51  0.49
+-20.0 :  0.59  0.59  0.60  0.61  0.62  0.54  0.52
+-10.0 :  0.59  0.60  0.60  0.61  0.62  0.56  0.55
+  0.0 :  0.60  0.60  0.61  0.62  0.63  0.58  0.57
+ 10.0 :  0.60  0.61  0.61  0.62  0.63  0.61  0.59
+ 20.0 :  0.61  0.61  0.62  0.63  0.63  0.62  0.61
+ 30.0 :  0.61  0.62  0.62  0.63  0.64  0.64  0.63
+
+        -30.0 -20.0 -10.0   0.0  10.0  20.0  30.0
+Min: theta1= 30 theta2= -30 log10(sum)= 0.491302 time= 1 scale= 5.33122 3.11247 1.83645 0.330812
+2\1    -30.0 -20.0 -10.0   0.0  10.0  20.0  30.0
+
+-30.0 :  0.60  0.60  0.61  0.61  0.61  0.62  0.62
+-20.0 :  0.60  0.61  0.61  0.62  0.62  0.63  0.63
+-10.0 :  0.61  0.61  0.62  0.62  0.63  0.63  0.64
+  0.0 :  0.61  0.62  0.62  0.63  0.63  0.64  0.64
+ 10.0 :  0.62  0.62  0.63  0.63  0.63  0.64  0.64
+ 20.0 :  0.62  0.62  0.63  0.63  0.64  0.64  0.65
+ 30.0 :  0.62  0.63  0.63  0.64  0.64  0.65  0.65
+
+        -30.0 -20.0 -10.0   0.0  10.0  20.0  30.0
+Min: theta1= -30 theta2= -30 log10(sum)= 0.596609 time= 2 scale= 5.33122 3.11247 2.29432 0.442077
+Running snapprint
+snapprint snap.in x+y,x+z,y+z
+### nemo Debug Info: x+y x+z y+z 
+-0.831173 -1.06045 -0.672651 
+4.32307 3.2835 -2.01193 
+0.62486 0.608538 0.142771 
+0.16389 0.365376 -0.225151 
+0.633704 0.0175 0.796005 
+-0.885373 0.6264 0.863452 
+-1.21501 -0.764112 -1.35454 
+0.524287 1.05154 0.836483 
+0.361728 0.0959956 0.245225 
+-3.69998 -4.22428 1.38034 
+snapprint snap.in x+y | head -1
+### nemo Debug Info: x+y 
+-0.831173 
+snapprint snap.in x+z | head -1
+### nemo Debug Info: x+z 
+-1.06045 
+snapprint snap.in y+z | head -1
+### nemo Debug Info: y+z 
+-0.672651 
+snapprint snap.in x-y | head -1
+### nemo Debug Info: x-y 
+-0.387799 
+==========================================================
+Cleaning src/nbody/trans
+Creating snap.in
+mkplummer snap.in 10 seed=123
+Running snapcenter
+snapcenter snap.in . weight=r report=t  ; nemo.coverage snapcenter.c
+0.086054 0.073293 -0.271331 0.149832 -0.039546 0.064694 
+Running snaprotate
+snaprotate snap.in - 45,60,45 xyz | csf - . ; nemo.coverage snaprotate.c
+### nemo Debug Info: Warning: new option: select=pos,vel,acc  => mask=24592
+### nemo Debug Info: On top-level: 4 items  read, 4 items written
+Running snaprect
+snaprect snap.in . ; nemo.coverage snaprect.c
+        e_x:     1.00000     0.96860    -0.13576    -0.20831   102.0   -8.0
+        e_y:     1.00000     0.22502     0.12223     0.96666    14.8   28.5
+        e_z:     1.00000    -0.10577    -0.98317     0.14894    81.4  -96.1
+Running snapinert
+snapinert snap.in - ; nemo.coverage snapintert.c
+Time: 0.000000
+      4.614957     -0.617361     -0.930503
+     -0.617361      0.275200      0.144610
+     -0.930503      0.144610      0.480631
+Eigenvalues:
+      4.901603  :        0.968595     -0.135763     -0.208306
+      0.282311  :        0.225021      0.122232      0.966657
+      0.186874  :        0.105775      0.983172     -0.148943
+Running snapsplit
+snapsplit snap.in - nbody=1 | csf - . ; nemo.coverage snapsplit.c
+### nemo Debug Info: Snapshot time=0.000000 to be copied
+### nemo Debug Info: mstropen: count=1
+### nemo Debug Info: mstropen: count=2
+### nemo Debug Info: mstropen: count=3
+### nemo Debug Info: mstropen: count=4
+### nemo Debug Info: mstropen: count=5
+### nemo Debug Info: mstropen: count=6
+### nemo Debug Info: mstropen: count=7
+### nemo Debug Info: mstropen: count=8
+### nemo Debug Info: mstropen: count=9
+### nemo Debug Info: mstropen: count=10
+### nemo Debug Info: Wrote 10 1-body snapshots
+### nemo Debug Info: On top-level: 13 items  read, 13 items written
+Running
+snapcopy snap.in - select=i | csf - . ; nemo.coverage snapcopy.c
+### nemo Debug Info: On top-level: 4 items  read, 4 items written
+Running
+snapadd snap.in,snap.in - | tsf -; nemo.coverage snapadd.c
+### nemo Debug Info: nbody1 = 10
+### nemo Debug Info: nbody2 = 10
+char Headline[28] "init_xrandom: seed used 123"
+char History[39] "snapadd snap.in,snap.in - VERSION=2.5b"
+char History[42] "mkplummer snap.in 10 seed=123 VERSION=2.9"
+char History[42] "mkplummer snap.in 10 seed=123 VERSION=2.9"
+set SnapShot
+  set Parameters
+    int Nobj 20 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[20] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[20][2][3] -0.609486 -0.221687 -0.450963 -0.0766784 -0.209397 0.396561 4.80925 -0.486182 -1.52575 0.418474 0.117766 0.230193 0.545314 0.0795464 0.0632245 0.0867019 -0.109128 -0.282036 0.377209 -0.213318 -0.0118330 -0.739982 0.649302 -0.0595349 -0.0724005 0.706104 0.0899005 0.158021 0.0702185 0.316083 -0.561212 -0.324160 1.18761 0.379356 0.257397 0.0247723 -0.312291 -0.902718 -0.451821 0.669557 -0.463708 -0.117066 0.369670 0.154617 0.681866 -0.0283658 -0.0937881 -0.135925 0.106249 0.255479 -0.0102538 -0.757828 0.0154417 -0.328447 -4.65230 0.952320 0.428016 -0.109256 -0.234103 -0.0446015 -0.609486 -0.221687 -0.450963 -0.0766784 -0.209397 0.396561 4.80925 -0.486182 -1.52575 0.418474 0.117766 0.230193 0.545314 0.0795464 0.0632245 0.0867019 -0.109128 -0.282036 0.377209 -0.213318 -0.0118330 -0.739982 0.649302 -0.0595349 -0.0724005 0.706104 0.0899005 0.158021 0.0702185 0.316083 -0.561212 -0.324160 1.18761 0.379356 0.257397 0.0247723 -0.312291 -0.902718 -0.451821 0.669557 -0.463708 -0.117066 0.369670 0.154617 0.681866 -0.0283658 -0.0937881 -0.135925 0.106249 0.255479 -0.0102538 -0.757828 0.0154417 -0.328447 -4.65230 0.952320 0.428016 -0.109256 -0.234103 -0.0446015 
+  tes
+tes
+Running
+snapdens snap.in - | tsf -; nemo.coverage snapdens.c
+### nemo Debug Info:  0.095209  -0.040500  0.093614  0.345923  0.094748  0.631948  0.053128  6 
+char Headline[28] "init_xrandom: seed used 123"
+char History[32] "snapdens snap.in - VERSION=1.5c"
+char History[42] "mkplummer snap.in 10 seed=123 VERSION=2.9"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[10][2][3] -0.609486 -0.221687 -0.450963 -0.0766784 -0.209397 0.396561 4.80925 -0.486182 -1.52575 0.418474 0.117766 0.230193 0.545314 0.0795464 0.0632245 0.0867019 -0.109128 -0.282036 0.377209 -0.213318 -0.0118330 -0.739982 0.649302 -0.0595349 -0.0724005 0.706104 0.0899005 0.158021 0.0702185 0.316083 -0.561212 -0.324160 1.18761 0.379356 0.257397 0.0247723 -0.312291 -0.902718 -0.451821 0.669557 -0.463708 -0.117066 0.369670 0.154617 0.681866 -0.0283658 -0.0937881 -0.135925 0.106249 0.255479 -0.0102538 -0.757828 0.0154417 -0.328447 -4.65230 0.952320 0.428016 -0.109256 -0.234103 -0.0446015 
+    double Aux[10] 0.0324352 0.000811623 0.0433150 0.0947479 0.0301008 0.0269386 0.0236871 0.0324352 0.0533073 0.000904492 
+  tes
+tes
+Running
+snapshift snap.in snap.in2 rshift=1,2,3 vshift=4,5,6;\
+	 nemo.coverage snapshift.c
+snapstack snap.in snap.in2 - deltar=10,0,0 deltav=-1,0,0 | tsf -;\
+	 nemo.coverage snapstack.c
+### Warning [snapstack]: zerocm=false is now the default!!
+char Headline[28] "init_xrandom: seed used 123"
+char History[69] "snapstack snap.in snap.in2 - deltar=10,0,0 deltav=-1,0,0 VERSION=2.0"
+char History[42] "mkplummer snap.in 10 seed=123 VERSION=2.9"
+char History[66] "snapshift snap.in snap.in2 rshift=1,2,3 vshift=4,5,6 VERSION=3.1b"
+char History[42] "mkplummer snap.in 10 seed=123 VERSION=2.9"
+set SnapShot
+  set Parameters
+    int Nobj 20 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[20] 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 0.100000 
+    double PhaseSpace[20][2][3] 9.39051 -0.221687 -0.450963 -1.07668 -0.209397 0.396561 14.8092 -0.486182 -1.52575 -0.581526 0.117766 0.230193 10.5453 0.0795464 0.0632245 -0.913298 -0.109128 -0.282036 10.3772 -0.213318 -0.0118330 -1.73998 0.649302 -0.0595349 9.92760 0.706104 0.0899005 -0.841979 0.0702185 0.316083 9.43879 -0.324160 1.18761 -0.620644 0.257397 0.0247723 9.68771 -0.902718 -0.451821 -0.330443 -0.463708 -0.117066 10.3697 0.154617 0.681866 -1.02837 -0.0937881 -0.135925 10.1062 0.255479 -0.0102538 -1.75783 0.0154417 -0.328447 5.34770 0.952320 0.428016 -1.10926 -0.234103 -0.0446015 0.390514 1.77831 2.54904 3.92332 4.79060 6.39656 5.80925 1.51382 1.47425 4.41847 5.11777 6.23019 1.54531 2.07955 3.06322 4.08670 4.89087 5.71796 1.37721 1.78668 2.98817 3.26002 5.64930 5.94047 0.927600 2.70610 3.08990 4.15802 5.07022 6.31608 0.438788 1.67584 4.18761 4.37936 5.25740 6.02477 0.687709 1.09728 2.54818 4.66956 4.53629 5.88293 1.36967 2.15462 3.68187 3.97163 4.90621 5.86408 1.10625 2.25548 2.98975 3.24217 5.01544 5.67155 -3.65230 2.95232 3.42802 3.89074 4.76590 5.95540 
+  tes
+tes
+snapmass snap.in - mass=2.0 norm=4 | tsf -;\
+	 nemo.coverage snapmass.c
+### nemo Debug Info: Using a bodytrans mass expression
+### nemo Debug Info: Warning: existing masses overwritten
+### nemo Debug Info: Total mass: 20
+### nemo Debug Info: Rescaling total mass to 4
+char Headline[28] "init_xrandom: seed used 123"
+char History[48] "snapmass snap.in - mass=2.0 norm=4 VERSION=2.1c"
+char History[42] "mkplummer snap.in 10 seed=123 VERSION=2.9"
+set SnapShot
+  set Parameters
+    int Nobj 10 
+    double Time 0.00000 
+  tes
+  set Particles
+    int CoordSystem 66306 
+    double Mass[10] 0.400000 0.400000 0.400000 0.400000 0.400000 0.400000 0.400000 0.400000 0.400000 0.400000 
+    double PhaseSpace[10][2][3] -0.609486 -0.221687 -0.450963 -0.0766784 -0.209397 0.396561 4.80925 -0.486182 -1.52575 0.418474 0.117766 0.230193 0.545314 0.0795464 0.0632245 0.0867019 -0.109128 -0.282036 0.377209 -0.213318 -0.0118330 -0.739982 0.649302 -0.0595349 -0.0724005 0.706104 0.0899005 0.158021 0.0702185 0.316083 -0.561212 -0.324160 1.18761 0.379356 0.257397 0.0247723 -0.312291 -0.902718 -0.451821 0.669557 -0.463708 -0.117066 0.369670 0.154617 0.681866 -0.0283658 -0.0937881 -0.135925 0.106249 0.255479 -0.0102538 -0.757828 0.0154417 -0.328447 -4.65230 0.952320 0.428016 -0.109256 -0.234103 -0.0446015 
+  tes
+tes
+==========================================================
+Cleaning src/nbody/xyz
+Creating snap.in
+mkplummer snap.in 10 seed=123
+Running
+snapxyz snap.in -  color=i |  tsf -  ; nemo.coverage snapxyz.c
+### nemo Debug Info: [snapxyz: npoint = 10  time = 0.00]
+char Headline[28] "init_xrandom: seed used 123"
+char History[39] "snapxyz snap.in - color=i VERSION=2.1b"
+char History[42] "mkplummer snap.in 10 seed=123 VERSION=2.9"
+set PointData
+  double Tpoint 0.00000 
+  int Npoint 10 
+  double Position[10][3] -0.609486 -0.221687 -0.450963 4.80925 -0.486182 -1.52575 0.545314 0.0795464 0.0632245 0.377209 -0.213318 -0.0118330 -0.0724005 0.706104 0.0899005 -0.561212 -0.324160 1.18761 -0.312291 -0.902718 -0.451821 0.369670 0.154617 0.681866 0.106249 0.255479 -0.0102538 -4.65230 0.952320 0.428016 
+  double Velocity[10][3] -0.0766784 -0.209397 0.396561 0.418474 0.117766 0.230193 0.0867019 -0.109128 -0.282036 -0.739982 0.649302 -0.0595349 0.158021 0.0702185 0.316083 0.379356 0.257397 0.0247723 0.669557 -0.463708 -0.117066 -0.0283658 -0.0937881 -0.135925 -0.757828 0.0154417 -0.328447 -0.109256 -0.234103 -0.0446015 
+  int Color[10] 0 1 2 3 4 5 6 7 8 9 
+tes
+==========================================================
+Cleaning src/orbit/misc
+Running mkorbit
+mkorbit orb1.in x=1 vy=1 potname=plummer
+### nemo Debug Info: Dvel=-1
+### nemo Debug Info: Using pattern speed = 0
+### nemo Debug Info: pos: 1.000000 0.000000 0.000000  
+vel: 0.000000 1.000000 0.000000  
+etot: -0.207107
+lz=1.000000
+Running orbint
+orbint orb1.in orb1.out nsteps=10 dt=0.1 ndiag=1 potname=plummer mode=euler   
+### nemo Debug Info: Pattern speed=0
+### nemo Debug Info: 0.000000 0.500000 -0.707107     -0.2071067811865 -0
+### nemo Debug Info: -0.100000 0.500625 -0.705346     -0.2047206158586 -0.0115214
+### nemo Debug Info: -0.300000 0.495139 -0.695260     -0.2001203089163 -0.0337337
+### nemo Debug Info: -0.500000 0.481565 -0.677589     -0.1960241323472 -0.0535118
+### nemo Debug Info: -0.700000 0.461755 -0.654382     -0.1926260701012 -0.0699191
+### nemo Debug Info: -0.900000 0.437908 -0.627868     -0.1899592670596 -0.0827955
+### nemo Debug Info: Energy conservation: 0.0827955
+orbint orb1.in orb2.out nsteps=10 dt=0.1 ndiag=1 potname=plummer mode=me      
+### nemo Debug Info: Pattern speed=0
+### nemo Debug Info: Modified EULER integration
+### nemo Debug Info: 0.200000 0.492070 -0.701370     -0.2092997529772 -0
+### nemo Debug Info: 0.400000 0.476289 -0.687414     -0.2111245507602 0.00871859
+### nemo Debug Info: 0.600000 0.454630 -0.667046     -0.2124155841454 0.0148869
+### nemo Debug Info: 0.800000 0.429314 -0.642473     -0.2131590273133 0.018439
+### nemo Debug Info: 1.000000 0.402318 -0.615762     -0.2134439961266 0.0198005
+### nemo Debug Info: Energy conservation: inf
+orbint orb1.in orb3.out nsteps=10 dt=0.1 ndiag=1 potname=plummer mode=leapfrog
+### nemo Debug Info: Pattern speed=0
+### nemo Debug Info: 0.000000 0.500000 -0.707107     -0.2071067811865 -0
+### nemo Debug Info: 0.100000 0.498863 -0.705966     -0.2071030186555 -1.81671e-05
+### nemo Debug Info: 0.200000 0.495495 -0.702587     -0.2070921099494 -7.0839e-05
+### nemo Debug Info: 0.300000 0.490018 -0.697093     -0.2070751163741 -0.000152891
+### nemo Debug Info: 0.400000 0.482624 -0.689677     -0.2070535798874 -0.000256879
+### nemo Debug Info: 0.500000 0.473551 -0.680581     -0.2070292564812 -0.000374322
+### nemo Debug Info: 0.600000 0.463073 -0.670077     -0.2070038566341 -0.000496964
+### nemo Debug Info: 0.700000 0.451470 -0.658448      -0.206978848254 -0.000617715
+### nemo Debug Info: 0.800000 0.439016 -0.645971     -0.2069553469546 -0.000731189
+### nemo Debug Info: 0.900000 0.425967 -0.632901     -0.2069340894068 -0.00083383
+### nemo Debug Info: 1.000000 0.412551 -0.619466     -0.2069154675793 -0.000923744
+### nemo Debug Info: Energy conservation: 0.000923744
+orbint orb1.in orb4.out nsteps=10 dt=0.1 ndiag=1 potname=plummer mode=rk4     
+### nemo Debug Info: Pattern speed=0
+### nemo Debug Info: 0.000000 0.500000 -0.707107     -0.2071067811865 -0
+### nemo Debug Info: 0.100000 0.498861 -0.705968     -0.2071067847799 1.73504e-08
+### nemo Debug Info: 0.300000 0.489999 -0.697105     -0.2071068020562 1.00768e-07
+### nemo Debug Info: 0.500000 0.473504 -0.680610     -0.2071068241237 2.07319e-07
+### nemo Debug Info: 0.700000 0.451393 -0.658499     -0.2071068416337 2.91865e-07
+### nemo Debug Info: 0.900000 0.425866 -0.632973     -0.2071068514055 3.39047e-07
+### nemo Debug Info: Energy conservation: 3.39047e-07
+Running orbintv
+orbintv orb1.in orb1v.out dtout=0.1 ndiag=10 tstop=10 potname=plummer mode=dopri5
+### nemo Debug Info: nsteps = 101
+### nemo Debug Info: Pattern speed=0
+### nemo Debug Info: 0.000000 0.500000 -0.707107     -0.2071067811865 -0
+make: *** [orbintv] Bus error
+==========================================================
+Cleaning src/orbit/potential
+Running potlist
+potlist harmonic  x=1 dr=0.001 ; nemo.coverage potlist.c
+### nemo Debug Info: [potlist in double mode]
+### nemo Debug Info: x y z ax ay az phi phixx phiyy phizz rho dr time
+1 0 0 -1 -0 -0 0.5 1 1 1 0.238732 0.001 0 
+potlist plummer   x=1 dr=0.001 ; nemo.coverage potlist.c
+### nemo Debug Info: [potlist in double mode]
+### nemo Debug Info: x y z ax ay az phi phixx phiyy phizz rho dr time
+1 0 0 -0.353553 -0 -0 -0.707107 -0.176909 0.353553 0.353553 0.0421918 0.001 0 
+potlist isochrone x=1 dr=0.001 ; nemo.coverage potlist.c
+### nemo Debug Info: [potlist in double mode]
+### nemo Debug Info: x y z ax ay az phi phixx phiyy phizz rho dr time
+1 0 0 -0.12132 -0 -0 -0.414214 -0.0104751 0.12132 0.12132 0.0184751 0.001 0 
+potlist athan92   x=0.00001	 ; nemo.coverage potlist.c
+### nemo Debug Info: [potlist in double mode]
+### nemo Debug Info: x y z ax ay az phi time
+1e-05 0 0 -4.25374 -0 0 -252017 0 
+# New style accelleration
+potlist Plummer 0,1,1
+### Warning [potlist]: Plummer: file "" ignored
+### nemo Debug Info: [potlist in double mode]
+### nemo Debug Info: x y z ax ay az phi time
+0 0 0 -0 -0 -0 -1 0 
+rotcurves isochrone 0,1,1 - halo 0,1,1 - plummer 0,0.15,0.05 \
+		radii=0:4:0.02 ;  nemo.coverage rotcurves.c
+### nemo Debug Info: Pattern speed: 0.000000
+PGPLOT /xw: Couldn't find program "pgxwin_server" in the directory named
+PGPLOT /xw: in your PGPLOT_DIR environment variable, or in any directory
+PGPLOT /xw: listed in your PATH environment variable.
+ %PGPLOT, Unable to read font file: grfont.dat
+ %PGPLOT, Use environment variable PGPLOT_FONT to specify the location of the PGPLOT grfont.dat file.
+potccd out=plummer.ccd potname=plummer x=-2:2:0.05 y=-2:2:0.05 ; nemo.coverage potccd.c
+### nemo Debug Info: Creating image 81 * 81 * 1
+### nemo Debug Info: using Omega = 0
+potccd - harmonic x=-1:1:0.2 y=-1:1:0.2 |\
+		 ccdprint - x= y= format=%4.3f label=x,y ; nemo.coverage potccd.c
+### nemo Debug Info: Creating image 11 * 11 * 1
+### nemo Debug Info: using Omega = 0
+ Y\X -1.000 -0.800 -0.600 -0.400 -0.200 -0.000 0.200 0.400 0.600 0.800 1.000 
+
+1.000  1.000 0.820 0.680 0.580 0.520 0.500 0.520 0.580 0.680 0.820 1.000 
+0.800  0.820 0.640 0.500 0.400 0.340 0.320 0.340 0.400 0.500 0.640 0.820 
+0.600  0.680 0.500 0.360 0.260 0.200 0.180 0.200 0.260 0.360 0.500 0.680 
+0.400  0.580 0.400 0.260 0.160 0.100 0.080 0.100 0.160 0.260 0.400 0.580 
+0.200  0.520 0.340 0.200 0.100 0.040 0.020 0.040 0.100 0.200 0.340 0.520 
+-0.000  0.500 0.320 0.180 0.080 0.020 0.000 0.020 0.080 0.180 0.320 0.500 
+-0.200  0.520 0.340 0.200 0.100 0.040 0.020 0.040 0.100 0.200 0.340 0.520 
+-0.400  0.580 0.400 0.260 0.160 0.100 0.080 0.100 0.160 0.260 0.400 0.580 
+-0.600  0.680 0.500 0.360 0.260 0.200 0.180 0.200 0.260 0.360 0.500 0.680 
+-0.800  0.820 0.640 0.500 0.400 0.340 0.320 0.340 0.400 0.500 0.640 0.820 
+-1.000  1.000 0.820 0.680 0.580 0.520 0.500 0.520 0.580 0.680 0.820 1.000 
+potccd - harmonic x=-1:1:0.2 y=-1:1:0.2 dr=0.01 |\
+		 ccdprint - x= y= format=%4.3f label=x,y ; nemo.coverage potccd.c
+### nemo Debug Info: Creating image 11 * 11 * 1
+### nemo Debug Info: 3D-Poisson density map with delta-r=0.01
+### nemo Debug Info: using Omega = 0
+ Y\X -1.000 -0.800 -0.600 -0.400 -0.200 -0.000 0.200 0.400 0.600 0.800 1.000 
+
+1.000  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+0.800  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+0.600  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+0.400  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+0.200  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+-0.000  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+-0.200  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+-0.400  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+-0.600  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+-0.800  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+-1.000  6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 6.000 
+potlist ccd potfile=plummer.ccd x=0:2:0.1 dr=0.001 | awk '{print $1,$4,$7,$11}' > plummer1.tab
+### nemo Debug Info: [potlist in double mode]
+### nemo Debug Info: x y z ax ay az phi phixx phiyy phizz rho dr time
+potlist plummer                 x=0:2:0.1 dr=0.001 | awk '{print $1,$4,$7,$11}' > plummer2.tab
+### nemo Debug Info: [potlist in double mode]
+### nemo Debug Info: x y z ax ay az phi phixx phiyy phizz rho dr time
+tabmath plummer1.tab,plummer2.tab - %1,%2-%6,%3-%7,%4-%8 all format=%f
+0.000000 0.000000 0.000000 -0.080270 
+0.100000 0.000600 0.000000 -0.079007 
+0.200000 0.001084 0.000000 -0.075480 
+0.300000 0.001381 0.000000 -0.070191 
+0.400000 0.001481 0.000000 -0.063790 
+0.500000 0.001427 0.000000 -0.056913 
+0.600000 0.001276 0.000000 -0.050072 
+0.700000 0.001082 0.000000 -0.043616 
+0.800000 0.000885 0.000000 -0.037746 
+0.900000 0.000705 0.000000 -0.032545 
+1.000000 0.000552 0.000000 -0.028017 
+1.100000 0.000429 0.000000 -0.024122 
+1.200000 0.000331 0.000000 -0.020797 
+1.300000 0.000255 0.000000 -0.017971 
+1.400000 0.000196 0.000000 -0.015574 
+1.500000 0.000151 0.000000 -0.013540 
+1.600000 0.000118 0.000000 -0.011814 
+1.700000 0.000092 0.000000 -0.010346 
+1.800000 0.000072 0.000000 -0.009094 
+1.900000 0.000056 0.000000 -0.008023 
+2.000000 0.178885 0.447214 -0.004275 
+nemoinp 0:10 |  tabmath - - '1/(sqrt(4+%1)' > map0.tab
+potccd map0.ccd rotcur 0 map0.tab x=-10:10:0.1 y=-10:10:0.1
+### nemo Debug Info: Creating image 201 * 201 * 1
+### nemo Debug Info: using Omega = 0
+ccdstat map0.ccd
+Min=0.000000  Max=0.500000
+Number of points      : 40401
+Mean and dispersion   : 0.243456 0.135323
+Skewness and kurtosis : -1.045066 -0.403456
+Sum and Sum*Dx*Dy*Dz  : 9835.884001 0.000000
+0/40401 out-of-range points discarded
+Running potq
+potq pfenniger84 r=1:10	
+1 0.497721 0 10
+2 0.517117 0.000606655 8
+3 0.426776 0.000922551 8
+4 0.275563 0.000832961 8
+5 0.10667 0.000569431 8
+6 0.0305462 0.000926259 6
+7 0.0177048 0.000573299 6
+8 0.0118711 0.000401105 6
+9 0.00860622 0.000298991 6
+10 0.00656493 0.000234145 6
+Running potrot
+potrot pfenniger84 r=1:10	
+1 -0.0266949 0.163386
+2 -0.0427561 0.292425
+3 -0.0460846 0.371825
+4 -0.0403306 0.401649
+5 -0.0303179 0.389345
+6 -0.0212746 0.357278
+7 -0.0164998 0.339851
+8 -0.0133471 0.326767
+9 -0.0110215 0.31495
+10 -0.00924088 0.303988
+TESTSUITE   ended Mon Oct  3 07:57:24 EDT 2011

@@ -1,0 +1,12 @@
+make -C utils default
+make[1]: Entering directory `/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/usr/dehnen/utils'
+make -f makeall COMPILER=gcc WDutilsDevel= library
+make[2]: Entering directory `/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/usr/dehnen/utils'
+CPATH= g++ -o lib/exception.o src/exception.cc -Iinc/ -march=native -mfpmath=sse -mpreferred-stack-boundary=4 -ggdb3 -Wall -Wextra -Winit-self -Wshadow -O2 -fPIC -fopenmp -funroll-loops -fforce-addr  -rdynamic  -c
+src/exception.cc:1: error: bad value (native) for -march= switch
+src/exception.cc:1: error: bad value (native) for -mtune= switch
+make[2]: *** [lib/exception.o] Error 1
+make[2]: Leaving directory `/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/usr/dehnen/utils'
+make[1]: *** [libgcc] Error 2
+make[1]: Leaving directory `/home/ricec2/nbody-rebuild/for-colin-and-julie/nemo_cvs/usr/dehnen/utils'
+make: *** [utils] Error 2

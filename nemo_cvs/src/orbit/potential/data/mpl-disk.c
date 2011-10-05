@@ -1,0 +1,206 @@
+/*
+ * mpl.c: procedures for intializing and calculating the forces and
+ *             	potential of a combination of 3 potentials:
+ *			Miyamoto Nagai Disk
+ *			Plummer Sphere
+ *			Logarithmic Halo
+ *          Refs: BT pp. 43-44; Miyamoto and Nagai PASJ 27, 533 (1975)
+ *	Miyamoto Potential Phi_m (R, z) = -GMdisk / sqrt (R^2+(a+sqrt(z^2+b^2))^2)
+ * 	       Parameters: a, b (shape parameters), M (mass); G=1
+ *             Names used: miya_ascal, miya_bscal, miya_mass
+ *	Plummer Potential Phi_p (r) = -GMsph / (r + rc) = -GMsph/ (sqrt(R^2 + z^2) + rc)
+ *		Parameters: rc, Msph; G=1
+ *		Names used: plu_rc, plu_mass
+ * 	Logarithmic Halo Phi_l (R, z) = vhalo^2 ln(R^2 + (z^2/q^2) + d^2)
+ *		Parameters: vhalo, q, d
+*		Names used: vhalo, q, d
+ *  March 90 Stefano Casertano, University of Pittsburgh
+ * 10-Nov-90 inserted omega as first parameter for standard Nemo  PJT
+ *  6-oct-91 fixed bug - and made code accept both XYZ and XZY versions (pjt)
+ *  7-mar-92 merged sun and 3b1 versions once more			 pjt
+ *    oct-93 get_pattern
+ *  12-mar-07 bwillett changed from miyamoto.c to mpl.c
+ *  27-apr-07 bwillett modifying mpl3.c to change the acceleration fields
+ *  1-may-07 bwillett created mpl4.c - took out gravitational constant
+ *	all masses scaled as 1 M.U. = 222288.47 Ms 
+ *	length unit: 1 kpc time unit: 1 Gyr
+*
+ */
+
+#include <stdinc.h>
+#include <potential_float.h>
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <omp.h>
+
+#define PI 3.141592654
+
+local double G = 1;
+local double omega = 0.0;		/* pattern speed */
+local double plu_rc = 1.0;
+local double plu_mass = 1.0;
+local double vhalo = 1.0;
+local double q = 1.0;
+local double d = 1.0;
+local double disk_mass = 1.0;
+local double disk_radius = 1.0;
+local double h = 1.0;
+
+double funcx(double x, double y, double z, double zp, double r, double phi, double h);
+double funcy(double x, double y, double z, double zp, double r, double phi, double h);
+double funcz(double x, double y, double z, double zp, double r, double phi, double h);
+
+/* 20070427 bwillett commented this out
+#if !defined(Y) && !defined(Z)
+                                          default: XZY setup (re-oriented)
+#define X 0
+#define Y 2
+#define Z 1
+#else
+                      the normal axisymmetric case, as defined in e.g. B&T */
+#define X 0
+#define Y 1
+#define Z 2
+// #endif
+
+void inipotential (int *npar, double *par, string name)
+{
+    int n;
+
+    n = *npar;
+    if (n>0) omega = par[0];
+    if (n>1) plu_rc = par[1];
+    if (n>2) plu_mass = par[2];
+    if (n>3) vhalo = par[3];
+    if (n>4) q = par[4];
+    if (n>5) d = par[5];
+    if (n>6) disk_mass = par[6];
+    if (n>7) disk_radius = par[7];
+    if (n>8) h = par[8];
+    if (n>9) warning("mpl: only first 9 parameters recognized");
+
+}
+    
+void potential_double(int *ndim,double *pos,double *acc,double *pot,double *time)
+{
+    double apar, qpar, spar, ppar, lpar, rpar, rcyl;
+    double i1,i2,i3;
+
+// 20070312 bwillett added ppar - the plummer denominator: r + rc = sqrt(x^2+y^2+z^2) + rc
+// 20070312 bwillett added lpar - the logarithmic argument: R^2 + (z/q)^2 + d^2
+// 20070427 bwillett added rpar - the spherical radius: r + rc - rc = ppar - plu_rc
+// 20070501 bwillett added apar - a + qpar
+// 20070507 bwillett took out pow statements
+// 20070507 bwillett used hypot from math.h
+
+    rcyl = hypot(pos[X],pos[Y]);
+    ppar = sqrt ((pos[X]*pos[X])+(pos[Y]*pos[Y])+(pos[Z]*pos[Z])) + plu_rc;
+    rpar = ppar - plu_rc;
+    lpar = (rcyl*rcyl) + ((pos[Z]/q)*(pos[Z]/q)) + (d*d);
+	
+// 20070312 bwillett added plummer sphere potential and logarithmic potential
+    //*pot = (-(miya_mass)/spar) + (-(plu_mass)/ppar) + (vhalo*vhalo*log(lpar));
+
+// 20070312 bwillett rest left unchanged
+// 20070427 bwillett changed the acceleration field
+
+// This is only valid for 3 dimensions, and is in (x,y,z)
+// Recall F_mu = -grad_mu U
+// So a_mu = -grad_mu Phi
+// I did these derivatives in Mathematica, and will try to keep it consistent with the conventions written above
+
+	acc[X] = - ( ( (2.0*vhalo*vhalo*pos[X])/(lpar) ) + ( (plu_mass*pos[X])/(rpar*ppar*ppar) ) );
+	acc[Y] = - ( ( (2.0*vhalo*vhalo*pos[Y])/(lpar) ) + ( (plu_mass*pos[Y])/(rpar*ppar*ppar) ) );
+	acc[Z] = - ( ( (2.0*vhalo*vhalo*pos[Z])/(lpar) ) + ( (plu_mass*pos[Z])/(rpar*ppar*ppar) ) );
+
+
+
+// willeb 20080911 - do the integrals required for the ring potential
+// X-integral
+
+        double x,y,z;
+
+        x = pos[X];
+        y = pos[Y];
+        z = pos[Z];
+
+        double Mdisk = disk_mass;
+	double R = disk_radius;
+        double phi = 0, dphi = 0;
+        double r = 0, dr = 0;
+        double zp = 0, dzp = 0;
+        double N = 50;
+        double i,j,k;
+        double resultx = 0, resulty = 0, resultz = 0;
+
+        dphi = (2*PI)/N;
+        dr = (R)/N;
+        dzp = (h)/N;
+
+	// X-integral
+        for(phi=0;phi<=2*PI;phi+=(2*PI)/N) {
+                for(r=0;r<=R;r+=R/N) {
+                        for(zp=-h/2;zp<h/2;zp+=h/N) {
+                                resultx += funcx(x,y,z,zp,r,phi,h)*r*dr*dphi*dzp;
+                        }
+                }
+        }
+
+        resultx *= -(Mdisk)/(PI*R*R*h);
+
+	// Y-integral
+        for(phi=0;phi<=2*PI;phi+=(2*PI)/N) {
+                for(r=0;r<=R;r+=R/N) {
+                        for(zp=-h/2;zp<h/2;zp+=h/N) {
+                                resulty += funcy(x,y,z,zp,r,phi,h)*r*dr*dphi*dzp;
+                        }
+                }
+        }
+
+        resulty *= -(Mdisk)/(PI*R*R*h);
+
+	// Z-integral
+        for(phi=0;phi<=2*PI;phi+=(2*PI)/N) {
+                for(r=0;r<=R;r+=R/N) {
+                        for(zp=-h/2;zp<h/2;zp+=h/N) {
+                                resultz += funcz(x,y,z,zp,r,phi,h)*r*dr*dphi*dzp;
+                        }
+                }
+        }
+
+        resultz *= -(Mdisk)/(PI*R*R*h);
+
+	//printf("%f %f %f %f %f %f\n", x, y, z, resultx, resulty, resultz);
+
+	acc[X] += resultx;
+	acc[Y] += resulty;
+	acc[Z] += resultz;
+}
+
+double funcx(double x, double y, double z, double zp, double r, double phi, double h)
+{
+        double funcx;
+
+        funcx = (x-r*cos(phi)) / pow(pow(z-zp,2.0) + pow(x-r*cos(phi), 2.0) + pow(y-r*sin(phi), 2.0), 1.5);
+
+        return funcx;
+}
+
+double funcy(double x, double y, double z, double zp, double r, double phi, double h)
+{
+        double funcy;
+
+        funcy = (y-r*sin(phi)) / pow(pow(z-zp,2.0) + pow(x-r*cos(phi), 2.0) + pow(y-r*sin(phi), 2.0), 1.5);
+
+        return funcy;
+}
+
+double funcz(double x, double y, double z, double zp, double r, double phi, double h)
+{
+        double funcz;
+
+        funcz = (z-zp) / pow(pow(z-zp,2.0) + pow(x-r*cos(phi), 2.0) + pow(y-r*sin(phi), 2.0), 1.5);
+
+        return funcz;
+}

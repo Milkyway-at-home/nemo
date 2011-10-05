@@ -1,0 +1,9 @@
+sqrt(x*x+y*y)>0 bti__0
+sqrt(x*x+y*y)>1 bti__1
+sqrt(x*x+y*y)>2 bti__2
+-vz btr__3
+x+y btr__4
+x+z btr__5
+y+z btr__6
+x-y btr__7
+2.0 btr__8

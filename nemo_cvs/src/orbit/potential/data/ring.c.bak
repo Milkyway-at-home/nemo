@@ -1,0 +1,102 @@
+#include <stdinc.h>
+#include <potential_float.h>
+#include <math.h>
+
+local double G = 1;
+local double ringmass = 1E5;
+local double ringradius = 15.0;
+
+#define X 0
+#define Y 1
+#define Z 2
+#define PI 3.141592654
+
+double f1(double mu);
+double f2(double mu);
+double fenergy(double x, double y, double z, double a);
+
+void inipotential (int *npar, double *par, string name)
+{
+    int n;
+
+    n = *npar;
+    if (n>0) ringmass = par[0];
+    if (n>1) ringradius = par[1];
+    if (n>2) warning("mpl: only first 2 parameters recognized");
+
+}
+    
+void potential_double(int *ndim,double *pos,double *acc,double *pot,double *time)
+{
+
+	double sintheta, costheta, xi, mu, f1val, f2val, a, quant;
+
+	a = ringradius;
+	costheta = abs(pos[Z]) / sqrt(pos[X]*pos[X] + pos[Y]*pos[Y] + pos[Z]*pos[Z]);
+	sintheta = sqrt(pos[X]*pos[X] + pos[Y]*pos[Y]) / sqrt(pos[X]*pos[X] + pos[Y]*pos[Y] + pos[Z]*pos[Z]);
+
+	xi = sqrt(pos[X]*pos[X] + pos[Y]*pos[Y] + pos[Z]*pos[Z])/a;
+
+	mu = ((2.0*xi)/(1.0+xi*xi))*sintheta;
+
+	// Calculate the integrals
+
+	f1val = f1(mu);
+	f2val = f2(mu);
+
+	// The energy (FIX THIS, it doesn't matter unless you want to separate out parts of the tail)
+
+    *pot = ((-G*ringmass)/(2*PI)) * fenergy(pos[X],pos[Y],pos[Z],a);
+
+	// The accelerations
+	quant = 1.0 + xi*xi;
+
+	acc[X] = (-G*ringmass / (PI*a*a)) * (xi*sintheta*pow(quant, -1.5)*f1val - pow(quant, -1.5)*f2val);
+	acc[Y] = (-G*ringmass / (PI*a*a)) * (xi*sintheta*pow(quant, -1.5)*f1val - pow(quant, -1.5)*f2val);
+	acc[Z] = (-G*ringmass / (PI*a*a)) * (xi*costheta*pow(quant, -1.5)*f1val);
+
+}
+
+// The integrals
+double f1(double mu) {
+	double dalpha = PI / 1000.0;
+	double alpha = 0.0;
+	double quant = 0.0;
+	double total = 0.0;
+
+	for(alpha=0.0;alpha<=PI;alpha+=dalpha) {
+		quant = 1.0 - mu*cos(alpha);
+		total += pow(quant, -1.5)*dalpha;
+	}
+
+	return total;
+}
+
+double f2(double mu) {
+	double dalpha = PI / 1000.0;
+	double alpha = 0.0;
+	double quant = 0.0;
+	double total = 0.0;
+
+	for(alpha=0.0;alpha<=PI;alpha+=dalpha) {
+		quant = 1.0 - mu*cos(alpha);
+		total += cos(alpha)*pow(quant, -1.5)*dalpha;
+	}
+
+	return total;
+}
+
+double fenergy(double x, double y, double z, double a) {
+	double dalpha = 2*PI / 2000.0;
+	double alpha = 0.0;
+	double quant = 0.0;
+	double total = 0.0;
+
+	for(alpha=0.0;alpha<=2*PI;alpha+=dalpha) {
+		quant = alpha / pow((x-a*cos(alpha))*(x-a*cos(alpha)) + (y-a*sin(alpha))*(y-a*sin(alpha)) + z*z, 0.5);
+		total += quant*dalpha;
+	}
+
+	return total;
+}
+

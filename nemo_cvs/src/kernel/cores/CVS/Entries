@@ -1,0 +1,14 @@
+/Makefile/1.8/Fri Sep 30 20:29:28 2011//
+/allocate.c/1.20/Mon Oct  3 11:51:57 2011//
+/bswap.c/1.5/Fri Sep 30 20:29:28 2011//
+/burststring.c/1.4/Fri Sep 30 20:29:28 2011//
+/common.c/1.2/Fri Sep 30 20:29:28 2011//
+/cputime.c/1.3/Fri Sep 30 20:29:28 2011//
+/date_id.c/1.2/Fri Sep 30 20:29:28 2011//
+/error.c/1.11/Mon Oct  3 11:51:57 2011//
+/exception.c/1.8/Fri Sep 30 20:29:28 2011//
+/file_size.c/1.6/Fri Sep 30 20:29:28 2011//
+/filefn.c/1.5/Mon Oct  3 11:51:57 2011//
+/progress.c/1.3/Fri Sep 30 20:29:28 2011//
+/strlib.c/1.3/Fri Sep 30 20:29:28 2011//
+D

@@ -1,0 +1,7 @@
+int MyI 04
+float MyF 1.2345
+double MyD 9.87654321
+char MyS[5] "nemo"
+set MySet
+  int MyI2 01
+tes
